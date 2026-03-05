@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricardo Ruiz | Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-trigger">
+            <div class="logo-small">R</div>
+            <button id="menu-toggle" class="menu-btn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="close-x">&times;</span>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+            
+
+            <ul class="nav-links">
+                <li><a href="#" onclick="cargarSeccion('inicio')">Inicio</a></li>
+                <li><a href="#" onclick="cargarSeccion('sobre_mi')">Sobre mí</a></li>
+                <li><a href="#" onclick="cargarSeccion('portafolio')">Portafolio</a></li>
+                <li><a href="#" onclick="cargarSeccion('blog')">Blog</a></li>
+                <li><button id="open-contact" class="btn-modal">Contáctame</button></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <div class="loader">Cargando...</div>
+    </main>
+
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Hablemos</h3>
+            <form id="contact-form">
+                <input type="text" placeholder="Tu nombre" required>
+                <input type="email" placeholder="Tu email" required>
+                <textarea placeholder="Mensaje" rows="5"></textarea>
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
