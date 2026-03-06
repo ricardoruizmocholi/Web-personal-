@@ -1,18 +1,56 @@
-<section class="fade-in">
-    <h1 style="font-size: 3rem; margin-bottom: 10px;">Hola, soy Ricardo.</h1>
-    <p style="font-size: 1.2rem; opacity: 0.8;">Un resumen de mi mundo digital.</p>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 50px;">
-        
-        <div onclick="cargarSeccion('portafolio')" style="background: white; padding: 30px; border-radius: 20px; cursor: pointer;">
-            <h3 style="color: var(--marron-claro)">Proyectos</h3>
-            <p>Mira mis últimos trabajos en desarrollo web.</p>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/inicio.css">
+<section class="inicio1">
+    <div class="imagen">
+        <img src="../../img/perfil.jpeg" alt="Ricardo Ruiz">
+    </div>
+    <div class="sobremi">
+        <h1 class="tech-title">Ricardo Ruiz</h1>
+        <p>
+            Desarrollador Web apasionado por crear soluciones digitales robustas y estéticas. 
+            En el desarrollo front-end mi enfoque principal es en la experiencia del usuario que le resulte
+            lo mas intiutivo posible. 
+            Aportando compromiso, aprendizaje rápido y una visión tecnológica actualizada a cada proyecto.
+        </p>
+        <div class="botones-grupo">
+            <button onclick="cargarSeccion('sobre_mi')" class="btn-primario">Saber más</button>
+            <button id="open-contact-inicio" class="btn-secundario">Contáctame</button>
         </div>
-
-        <div onclick="cargarSeccion('sobre-mi')" style="background: white; padding: 30px; border-radius: 20px; cursor: pointer;">
-            <h3 style="color: var(--marron-claro)">Sobre mí</h3>
-            <p>CV, tecnologías y mi camino en DAW.</p>
-        </div>
-
     </div>
 </section>
+
+<section class="inicio2">
+    <h2 class="section-subtitle">Proyectos Destacados</h2>
+    <div class="carrusel-container">
+        <div class="carrusel-track">
+            <div class="proyecto-card">
+                <div class="proyecto-img-placeholder"></div>
+                <h3>E-commerce App</h3>
+                <p>Plataforma de ventas desarrollada con React y Node.js.</p>
+                <a href="#" onclick="cargarSeccion('portafolio')">Ver más</a>
+            </div>
+            <div class="proyecto-card">
+                <div class="proyecto-img-placeholder"></div>
+                <h3>Dashboard Tech</h3>
+                <p>Sistema de gestión de datos con visualización en tiempo real.</p>
+                <a href="#" onclick="cargarSeccion('portafolio')">Ver más</a>
+            </div>
+           
+        </div>
+    </div>
+</section>
+
+<section class="inicio3">
+    <div class="blog-resumen">
+        <h2 class="section-subtitle">Último en el Blog</h2>
+        <article class="blog-destacado">
+            <div class="blog-info">
+                <span>15 Oct 2023</span>
+                <h3>El futuro del desarrollo con IA</h3>
+                <p>Reflexiones sobre cómo las nuevas herramientas están cambiando DAW...</p>
+                <button onclick="cargarSeccion('blog')" class="btn-text">Leer artículo</button>
+            </div>
+        </article>
+    </div>
+</section>
+<script src="../../js/main.js"></script>

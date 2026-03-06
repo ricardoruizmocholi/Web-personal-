@@ -35,3 +35,15 @@ window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
 
 // Carga inicial
 document.addEventListener('DOMContentLoaded', () => cargarSeccion('inicio'));
+
+
+
+document.addEventListener('click', (e) => {
+    // Si el usuario hace clic en el botón de contacto de la sección inicio
+    if (e.target && e.target.id === 'open-contact-inicio') {
+        const modal = document.getElementById('contact-modal');
+        if (modal) {
+            modal.style.display = "flex";
+        }
+    }
+});

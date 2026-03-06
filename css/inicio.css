@@ -1,0 +1,126 @@
+/* --- SECCIÓN 1: SOBRE MÍ --- */
+.inicio1 {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+}
+
+.inicio1 .imagen {
+    /* El ancho coincide con el menú desplegable (33.33vw) para que lo tape exacto */
+    width: 33.33vw;
+    height: 100%;
+    background-color: var(--azul-oscuro);
+}
+
+.inicio1 .imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ajuste de cara manual: cambia estos valores según tu foto */
+    object-position: 50% 20%; 
+}
+
+.inicio1 .sobremi {
+    flex: 1;
+    background: linear-gradient(135deg, var(--blanco), var(--blaco-gradiente));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+}
+
+.tech-title {
+    font-size: 4rem;
+    background: linear-gradient(90deg, var(--azul-gradiente), var(--azul-oscuro));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.botones-grupo {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-primario, .btn-secundario {
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primario {
+    background: var(--azul-gradiente);
+    color: white;
+    border: none;
+}
+.btn-primario:hover {
+    background: transparent;
+    border: 2px solid var(--azul-gradiente);
+    color: var(--azul-gradiente);
+    
+}
+
+.btn-secundario {
+    background: transparent;
+    border: 2px solid var(--azul-gradiente);
+    color: var(--azul-gradiente);
+}
+.btn-secundario:hover {
+    background: var(--azul-gradiente);
+    color: white;
+    border: none;
+    
+}
+
+/* --- SECCIÓN 2: CARRUSEL PROYECTOS --- */
+.inicio2 {
+    height: 50vh;
+    background: linear-gradient(to right, var(--azul-gradiente), var(--azul-oscuro));
+    padding: 40px 10%;
+    color: white;
+}
+
+.carrusel-container {
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.carrusel-track {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.proyecto-card {
+    background: var(--blaco-gradiente);
+    color: var(--azul-oscuro);
+    padding: 20px;
+    border-radius: 15px;
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.proyecto-card:hover { transform: scale(1.05); }
+
+.proyecto-img-placeholder {
+    height: 150px;
+    background: #ddd;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* --- SECCIÓN 3: BLOG --- */
+.inicio3 {
+    padding: 80px 10%;
+    background: var(--blanco);
+}
+
+.blog-destacado {
+    border-left: 5px solid var(--azul-gradiente);
+    padding-left: 30px;
+    margin-top: 40px;
+}

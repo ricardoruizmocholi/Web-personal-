@@ -45,13 +45,42 @@ body {
 /* Franja de activación */
 .sidebar-trigger {
     min-width: var(--sidebar-width);
-
-    background-color: var(--azul-gradiente);
+    background-color: var(--azul-gradiente); /* Tu azul oscuro */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 0;
-    border-right: 0px solid rgba(0,0,0,0.05);
+    justify-content: space-between; /* Distribuye arriba, centro y abajo */
+    padding: 30px 0;
+    height: 100vh;
+}
+
+.social-list {
+    list-style: none;
+    padding: 40px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.social-list li a {
+    color: var(--blanco); /* Tu blanco gradiente */
+    transition: transform 0.3s, color 0.3s;
+    display: block;
+}
+
+.social-list li a:hover {
+    color:var(--rosa-gradiente); /* Un azul cyan para el hover tecnológico */
+    transform: scale(1.2);
+    
+   
+
+
+}
+
+.social-list svg {
+    width: 20px; /* Tamaño ajustado a la franja de 65px */
+    height: 20px;
 }
 
 .logo-small {
@@ -108,7 +137,9 @@ body {
 .nav-links {
     list-style: none;
     padding: 0;
-    margin: 50px 0;
+    margin: 200px 0;
+    margin-left: 25%;
+    margin-right: -25%;
 }
 
 .nav-links button{
@@ -147,11 +178,20 @@ body {
 
 /* --- MAIN CONTENT --- */
 #main-content {
-    margin-left: var(--sidebar-width);
+    
     width: 100%;
-    padding: 5% 10%;
+   
     min-height: 100vh;
     transition: var(--transition);
+}
+
+.btn-text{
+    background-color: var(--blanco);
+    color: var(--azul-gradiente);
+    border-radius: 0px;
+    border: 2px solid var(--azul-gradiente) ;
+    padding: 0.5%;
+
 }
 
 /* --- MODAL --- */
@@ -161,7 +201,10 @@ body {
     z-index: 2000;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background: rgba(67, 53, 32, 0.6);
+    background: rgba(252, 189, 236, 0.6);
+    backdrop-filter: blur(2px);
+    /* Compatibilidad para navegadores antiguos (Safari) */
+    -webkit-backdrop-filter: blur(3px);
     align-items: center;
     justify-content: center;
 }
@@ -172,4 +215,111 @@ body {
     border-radius: 15px;
     width: 90%;
     max-width: 500px;
+}
+
+/* --- MODAL CONTACTO TECH --- */
+.modal-content.contact-tech {
+    background: var(--azul-gradiente); /* Fondo azul intenso de la referencia */
+    color: var(--blanco);
+    padding: 50px;
+    border-radius: 0; /* Diseño cuadrado más moderno según referencia */
+    max-width: 900px;
+    position: relative;
+    border: none;
+    border-radius: 10px;
+}
+
+.contact-tech h2 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    font-weight: 800;
+}
+
+.tech-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Tres columnas como en la imagen */
+    gap: 20px;
+}
+
+/* Ajuste para el textarea y campos largos */
+.form-row:nth-child(2) {
+    grid-template-columns: 1fr 2fr;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.form-group-telefono {
+    margin-top: -31%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.tech-form input, 
+.tech-form select, 
+.tech-form textarea {
+    background: var(--blanco);
+    border: none;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+.tech-form textarea {
+    resize: none;
+}
+
+/* Botón estilo píldora blanca */
+.btn-enviar {
+    background: var(--blanco);
+    color: var(--azul-gradiente);
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-enviar:hover {
+    transform: scale(1.05);
+    background: var(--blaco-gradiente);
+}
+
+.form-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-footer p {
+    font-size: 0.7rem;
+    margin: 0;
+}
+
+/* Botón cerrar blanco */
+.close-modal {
+    color: var(--blanco);
+    font-size: 2.5rem;
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    cursor: pointer;
 }
