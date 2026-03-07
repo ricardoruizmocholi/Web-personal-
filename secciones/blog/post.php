@@ -1,4 +1,10 @@
 <?php
+
+$host = "localhost";
+$user = "root";
+$pass = ""; // En XAMPP por defecto está vacío
+$db   = "web_personal"; // El nombre que le pusieras en PHPMyAdmin
+
 $conexion = mysqli_connect("localhost", "root", "", "web_personal");
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -8,6 +14,10 @@ $post = mysqli_fetch_assoc($res);
 
 if (!$post) { die("Artículo no encontrado."); }
 ?>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+</head>
 <!DOCTYPE html>
 <html lang="es">
 <head>

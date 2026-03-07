@@ -1,4 +1,9 @@
 <?php
+$host = "localhost";
+$user = "root";
+$pass = ""; // En XAMPP por defecto está vacío
+$db   = "web_personal"; // El nombre que le pusieras en PHPMyAdmin
+
 // Conexión a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "web_personal");
 
@@ -6,6 +11,10 @@ $conexion = mysqli_connect("localhost", "root", "", "web_personal");
 $query = "SELECT id, titulo, extracto, fecha FROM blog_posts ORDER BY fecha DESC LIMIT 3";
 $resultado = mysqli_query($conexion, $query);
 ?>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/blog.css">
+</head>
 
 <div class="blog-container">
     <h1 class="tech-title">Blog de Desarrollo Web</h1>
