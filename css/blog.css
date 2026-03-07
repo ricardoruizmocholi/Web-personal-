@@ -1,84 +1,235 @@
+/* --- CONTENEDOR DEL BLOG --- */
 .blog-container {
-    padding: 20px;
-    animation: fadeIn 0.8s ease-in-out;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    min-height: 100vh;
 }
 
-.blog-header {
-    margin-bottom: 50px;
+.tech-title {
+    font-size: 3rem;
+    background-color:var(--azul-gradiente) ;
     text-align: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 50px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
 }
 
-.blog-grid {
+/* --- GRID DE TARJETAS ESTILO CRISTAL --- */
+.blog-grid-glass {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
 }
 
-.post-card {
-    background: var(--blanco);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-    border: 1px solid var(--gris-oscuro);
-}
-
-.post-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--azul-gradiente);
-}
-
-.post-image {
-    height: 200px;
-    background: linear-gradient(45deg, var(--azul-oscuro), var(--azul-gradiente));
+/* --- TARJETA GLASSMORPHISM --- */
+.card-glass {
+    /* Efecto Cristal Azulado */
+    background: rgba(0, 51, 255, 0.267); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    
+    /* Borde sutil brillante */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.post-tag {
+/* Efecto de iluminación al pasar el ratón */
+.card-glass:hover {
+    transform: translateY(-12px);
+    background: rgba(0, 51, 255, 0.12);
+    border: 1px solid var(--azul-gradiente);
+    box-shadow: 0 20px 40px rgba(0, 51, 255, 0.25);
+}
+
+/* Decoración interna de la tarjeta */
+.card-glass::before {
+    content: "";
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: var(--blanco);
-    color: var(--azul-gradiente);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: bold;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: rotate(45deg);
+    pointer-events: none;
 }
 
-.post-content {
-    padding: 25px;
+/* --- CONTENIDO DE LA TARJETA --- */
+.fecha-badge {
+    background: var(--azul-gradiente);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 51, 255, 0.3);
 }
 
-.post-date {
+.card-glass h2 {
+    color: var(--azul-oscuro);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.card-glass p {
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    /* Limitar a 3 líneas de texto para uniformidad */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- BOTÓN ESTILO GLASS --- */
+.btn-glass {
+    text-decoration: none;
     color: var(--azul-gradiente);
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 0.9rem;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    width: fit-content;
 }
 
-.post-content h2 {
-    margin: 10px 0;
-    font-size: 1.4rem;
+.btn-glass span {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-glass:hover {
     color: var(--azul-oscuro);
 }
 
-.post-content p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 20px;
+.btn-glass:hover span {
+    transform: translateX(8px);
 }
 
-.btn-leer {
+/* --- ESTILOS PARA EL POST INDIVIDUAL (DENTRO DEL MAIN) --- */
+
+/* Contenedor principal del artículo */
+.post-full-container {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* El panel de cristal para el contenido */
+.post-glass-panel {
+    background: rgba(255, 255, 255, 0.7); /* Fondo blanco traslúcido */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    padding: 50px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+/* Cabecera del post */
+.post-header {
+    border-bottom: 2px solid rgba(0, 51, 255, 0.1);
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+}
+
+.post-header h1 {
+    font-size: 2.8rem;
+    color: var(--azul-oscuro);
+    line-height: 1.2;
+    margin-top: 15px;
+}
+
+/* Cuerpo del texto */
+.post-body {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #333;
+    text-align: justify;
+}
+
+/* Estilos para párrafos y elementos dentro del post */
+.post-body p {
+    margin-bottom: 25px;
+}
+
+.post-body h3 {
     color: var(--azul-gradiente);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-    border-bottom: 2px solid transparent;
-    transition: 0.3s;
+    margin: 40px 0 15px 0;
+    font-size: 1.5rem;
 }
 
-.btn-leer:hover {
-    border-bottom: 2px solid var(--azul-gradiente);
+/* Botón de retorno (estilo minimalista) */
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    color: var(--azul-gradiente);
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: transform 0.3s;
+    font-size: 1rem;
+    text-transform: uppercase;
 }
+
+.btn-volver:hover {
+    transform: translateX(-5px);
+    color: var(--azul-oscuro);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Adaptación móvil */
+@media (max-width: 768px) {
+    .post-glass-panel {
+        padding: 30px 20px;
+        border-radius: 0; /* En móvil aprovechamos todo el ancho */
+    }
+    
+    .post-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 768px) {
+    .tech-title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+    
+    .card-glass {
+        padding: 25px;
+    }
+}
+

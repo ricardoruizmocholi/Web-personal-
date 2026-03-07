@@ -17,18 +17,16 @@ $resultado = mysqli_query($conexion, $query);
 </head>
 
 <div class="blog-container">
-    <h1 class="tech-title">Blog de Desarrollo Web</h1>
-    <div class="blog-lista-clasica">
+    <h1 class="tech-title">Blog de Desarrollo</h1>
+    <div class="blog-grid-glass">
         <?php while($row = mysqli_fetch_assoc($resultado)): ?>
-            <article class="entrada-fila">
-                <div class="info-meta">
-                    <span class="fecha"><?php echo $row['fecha']; ?></span>
-                </div>
-                <div class="cuerpo-entrada">
+            <article class="card-glass">
+                <div class="card-content">
+                    <span class="fecha-badge"><?php echo $row['fecha']; ?></span>
                     <h2><?php echo $row['titulo']; ?></h2>
                     <p><?php echo $row['extracto']; ?></p>
-                    <a href="post.php?id=<?php echo $row['id']; ?>" class="link-leer">
-                        Leer artículo completo →
+                    <a href="#" onclick="verPostCompleto(<?php echo $row['id']; ?>)" class="btn-glass">
+                        Leer artículo <span>→</span>
                     </a>
                 </div>
             </article>

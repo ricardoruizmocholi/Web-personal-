@@ -51,3 +51,22 @@ document.addEventListener('click', (e) => {
         }
     }
 });
+
+// Función para cargar un post específico dentro del index.html
+async function verPostCompleto(id) {
+    const mainContent = document.getElementById('main-content');
+    
+    try {
+        // Llamamos al archivo post.php pero le pedimos solo el contenido, no el HTML completo
+        const respuesta = await fetch(`post.php?id=${id}&ajax=true`);
+        if (!respuesta.ok) throw new Error("No se pudo cargar el artículo");
+        
+        const html = await respuesta.text();
+        mainContent.innerHTML = html;
+        
+        window.scrollTo(0, 0); // Volver arriba al cargar el post
+    } catch (error) {
+        console.error(error);
+        mainContent.innerHTML = "<p>Error al cargar el artículo.</p>";
+    }
+}
