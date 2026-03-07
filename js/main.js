@@ -13,18 +13,22 @@ menuToggle.addEventListener('click', () => {
 
 // Función para cargar secciones
 async function cargarSeccion(nombre) {
+    const mainContent = document.getElementById('main-content');
+    
     try {
-        const respuesta = await fetch(`secciones/${nombre}/index.html`);
-        if (!respuesta.ok) throw new Error("Sección no encontrada");
+        // Determinamos la extensión: si es blog buscamos .php, si no .html
+        const extension = (nombre === 'blog') ? 'php' : 'html';
+        const ruta = `secciones/${nombre}/index.${extension}`;
+        
+        const respuesta = await fetch(ruta);
+        if (!respuesta.ok) throw new Error("No se pudo cargar la sección");
+        
         const html = await respuesta.text();
+        mainContent.innerHTML = html; // Insertamos el resultado del PHP aquí
         
-        mainContent.innerHTML = html;
-        
-        // Cerrar menú tras click
-        sidebar.classList.remove('active');
         window.scrollTo(0, 0);
     } catch (error) {
-        mainContent.innerHTML = "<h2>Error al cargar la sección</h2>";
+        mainContent.innerHTML = "<h2>Error al cargar el contenido</h2>";
     }
 }
 
