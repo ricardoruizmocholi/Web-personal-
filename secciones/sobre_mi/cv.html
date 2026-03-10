@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Ricardo Ruiz Mocholí</title>
+    <style>
+        /* Variables de color */
+        :root {
+            --azul-principal: #0033FF;
+            --blanco: #FFFFFF;
+            --gris-claro: #f4f7f6;
+            --texto-oscuro: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gris-claro);
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--blanco);
+            display: grid;
+            grid-template-columns: 300px 1fr; /* Diseño de dos columnas */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Sección Lateral (Azul) */
+        .lateral {
+            background-color: var(--azul-principal);
+            color: var(--blanco);
+            padding: 30px;
+        }
+
+        .imagen {
+            width: 150px;
+            height: 150px;
+            background: #ddd; /* Placeholder para tu foto */
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid var(--blanco);
+        }
+
+        .imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lateral h3, .lateral h4 {
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .info_contacto p {
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .habilidades ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .habilidades li {
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* Sección Principal (Blanca) */
+        .principal {
+            padding: 40px;
+        }
+
+        .principal h1 {
+            color: var(--azul-principal);
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .principal h4 {
+            color: #666;
+            margin-top: 5px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        article {
+            margin-top: 30px;
+        }
+
+        article h4 {
+            color: var(--azul-principal);
+            border-bottom: 2px solid var(--azul-principal);
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .empresa, .formacion {
+            margin-bottom: 20px;
+        }
+
+        .empresa h4, .formacion h4 {
+            margin: 0;
+            border: none;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .empresa h5, .formacion h5 {
+            margin: 0;
+            color: var(--azul-principal);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .empresa p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="lateral">
+            <div class="imagen">
+                <img src="tu-foto.jpg" alt="Ricardo Ruiz">
+            </div>
+            <div class="info_contacto">
+                <h3>Contacto</h3>
+                <p>
+                    Calle Gravador Jordán, 87<br>
+                    46013 Valencia, España<br><br>
+                    <strong>Tel:</strong> (+34) 601 10 52 39<br>
+                    <strong>Email:</strong> ricardoruizm99@gmail.com<br>
+                    <strong>GitHub:</strong> github.com/ricardoruizmocholi
+                </p>
+            </div>
+            <div class="habilidades">
+                <h4>Conocimientos</h4>
+                <ul>
+                    <li>PHP / Java / JavaScript</li>
+                    <li>HTML5 / CSS3</li>
+                    <li>MySQL / PostgreSQL</li>
+                    <li>MongoDB</li>
+                    <li>Docker / Virtualización</li>
+                    <li>Linux Server</li>
+                    <li>WordPress</li>
+                </ul>
+                <h4>Aptitudes</h4>
+                <ul>
+                    <li>Resolución de problemas</li>
+                    <li>Trabajo bajo presión</li>
+                    <li>Adaptabilidad técnica</li>
+                    <li>Gestión del tiempo</li>
+                    <li>Metodologías Ágiles</li>
+                    <li>Capacidad de aprendizaje</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="principal">
+            <h1>Ricardo Ruiz Mocholí</h1>
+            <h4>Desarrollador de Aplicaciones Web (DAW)</h4>
+
+            <article class="resumen">
+                <h4>Resumen</h4>
+                <p>
+                    Desarrollor de Aplicaciones Web con una base sólida en tecnologías front, backend y gestión de bases de datos. 
+                    Mi trayectoria previa en el sector de la alta gastronomía me ha dotado de una capacidad excepcional para trabajar bajo presión, 
+                    gestionar equipos y optimizar procesos en entornos de alto rendimiento. Actualmente busco aplicar mi disciplina y mis 
+                    competencias técnicas en el sector IT para contribuir al desarrollo de soluciones de software eficientes y escalables.
+                </p>
+            </article>
+
+            <article class="laboral">
+                <h4>Experiencia laboral</h4>
+                
+                <div class="empresa">
+                    <h4>Cocinero, Restaurante Copenhague</h4>
+                    <h5>Junio 2024 - Abril 2025 | Valencia</h5>
+                    <p>
+                        Gestión de partidas en un entorno de alta exigencia. Desarrollo de la capacidad de respuesta rápida ante imprevistos y optimización de flujos de trabajo, habilidades que ahora traslado al desarrollo de código limpio y estructurado.
+                    </p>
+                </div>
+
+                <div class="empresa">
+                    <h4>Cocinero, Lamburguesa</h4>
+                    <h5>Septiembre 2023 - Abril 2024 | Valencia</h5>
+                    <p>
+                        Estandarización de procesos y trabajo colaborativo en equipo. Enfoque en la calidad del producto final y cumplimiento estricto de tiempos de entrega.
+                    </p>
+                </div>
+
+                <div class="empresa">
+                    <h4>Ayudante de Cocina, Restaurante Odiseo</h4>
+                    <h5>Abril 2023 - Marzo 2024 | Murcia</h5>
+                    <p>
+                        Formación en un entorno de estrella Michelin, adquiriendo una disciplina rigurosa, atención extrema al detalle y compromiso con la excelencia profesional.
+                    </p>
+                </div>
+            </article>
+
+            <article class="estudios">
+                <h4>Formación Académica</h4>
+                <div class="formacion">
+                    <h4>Técnico Superior en Desarrollo de Aplicaciones Web (DAW)</h4>
+                    <h5>CEAC | 2024 - 2026 (En curso)</h5>
+                </div>
+                <div class="formacion">
+                    <h4>Técnico en Cocina y Gastronomía</h4>
+                    <h5>Mediterráneo Culinary Center | 2020 - 2022</h5>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

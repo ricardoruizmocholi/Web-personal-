@@ -84,10 +84,21 @@ body {
 }
 
 .logo-small {
+    margin-bottom: 40px;
+}
+
+.logo-small a {
+    text-decoration: none !important; /* Quita el subrayado */
     font-weight: bold;
     font-size: 1.5rem;
-    color: var(--blanco);
-    margin-bottom: 40px;
+    color: var(--blanco); /* Usa tu variable blanca */
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.logo-small a:hover {
+    
+    transform: scale(1.1);
 }
 
 .menu-btn {
