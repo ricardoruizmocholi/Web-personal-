@@ -197,12 +197,19 @@ body {
 }
 
 .btn-text{
-    background-color: var(--blanco);
+    background-color: var(--blanco-gradiante);
     color: var(--azul-gradiente);
     border-radius: 0px;
     border: 2px solid var(--azul-gradiente) ;
     padding: 0.5%;
+    transition: 0.3s ease;
 
+}
+
+.btn-text:hover{
+    background-color: var(--azul-gradiente);
+    color: var(--blaco-gradiente);
+    margin-top: 0.3%;
 }
 
 /* --- MODAL --- */

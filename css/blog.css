@@ -36,7 +36,7 @@
     /* Efecto Cristal Azulado */
     width: 100%;
     margin: 0 auto;
-    background: rgba(0, 51, 255, 0.267); 
+    background: rgb(255, 255, 255); 
     backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px);
     
@@ -57,7 +57,7 @@
 /* Efecto de iluminación al pasar el ratón */
 .card-glass:hover {
     transform: translateY(-12px);
-    background: rgba(0, 51, 255, 0.12);
+    background: rgb(255, 255, 255);
     border: 1px solid var(--azul-gradiente);
     box-shadow: 0 20px 40px rgba(0, 51, 255, 0.25);
 }
