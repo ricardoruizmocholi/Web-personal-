@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Ricardo Ruiz Mocholí</title>
     <style>
-        /* Variables de color */
         :root {
             --azul-principal: #0033FF;
             --blanco: #FFFFFF;
@@ -13,39 +12,46 @@
             --texto-oscuro: #333;
         }
 
+        /* Configuración para simular A4 en pantalla */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--gris-claro);
-            color: var(--texto-oscuro);
-            line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         main {
-            max-width: 1000px;
-            margin: 0 auto;
+            width: 210mm;
+            height: 297mm;
             background: var(--blanco);
             display: grid;
-            grid-template-columns: 300px 1fr; /* Diseño de dos columnas */
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            grid-template-columns: 240px 1fr; /* Columna lateral ligeramente más estrecha */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden; /* Evita que el contenido salga del A4 */
+            box-sizing: border-box;
         }
 
-        /* Sección Lateral (Azul) */
+        /* Sección Lateral */
         .lateral {
             background-color: var(--azul-principal);
             color: var(--blanco);
-            padding: 30px;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .imagen {
-            width: 150px;
-            height: 150px;
-            background: #ddd; /* Placeholder para tu foto */
+            width: 130px;
+            height: 130px;
+            background: #ddd;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             overflow: hidden;
-            border: 4px solid var(--blanco);
+            border: 3px solid var(--blanco);
+            flex-shrink: 0;
         }
 
         .imagen img {
@@ -55,89 +61,106 @@
         }
 
         .lateral h3, .lateral h4 {
-            border-bottom: 2px solid rgba(255,255,255,0.3);
-            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 3px;
             text-transform: uppercase;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         .info_contacto p {
-            font-size: 0.9rem;
-            word-break: break-word;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
 
         .habilidades ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .habilidades li {
             background: rgba(255,255,255,0.1);
-            margin-bottom: 5px;
-            padding: 5px 10px;
+            margin-bottom: 4px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
-        /* Sección Principal (Blanca) */
+        /* Sección Principal */
         .principal {
-            padding: 40px;
+            padding: 30px 35px;
+            display: flex;
+            flex-direction: column;
         }
 
         .principal h1 {
             color: var(--azul-principal);
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             text-transform: uppercase;
+            line-height: 1;
         }
 
-        .principal h4 {
+        .principal h4.puesto {
             color: #666;
-            margin-top: 5px;
+            margin: 5px 0 0 0;
             font-weight: 400;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
         }
 
         article {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
-        article h4 {
+        article h4.titulo-seccion {
             color: var(--azul-principal);
             border-bottom: 2px solid var(--azul-principal);
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .resumen p {
+            font-size: 0.85rem;
+            margin: 0;
+            text-align: justify;
         }
 
         .empresa, .formacion {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .empresa h4, .formacion h4 {
             margin: 0;
-            border: none;
             color: #333;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
         }
 
         .empresa h5, .formacion h5 {
             margin: 0;
             color: var(--azul-principal);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .empresa p {
-            font-size: 0.95rem;
+            font-size: 0.82rem;
             color: #555;
-            margin-top: 8px;
+            margin-top: 4px;
+            line-height: 1.3;
         }
 
-        /* Responsivo */
-        @media (max-width: 768px) {
-            main {
-                grid-template-columns: 1fr;
-            }
+        /* Ajustes de Impresión */
+        @media print {
+            body { background: none; }
+            main { box-shadow: none; }
+            .lateral { -webkit-print-color-adjust: exact; }
         }
     </style>
 </head>
@@ -182,26 +205,26 @@
 
         <section class="principal">
             <h1>Ricardo Ruiz Mocholí</h1>
-            <h4>Desarrollador de Aplicaciones Web (DAW)</h4>
+            <h4 class="puesto">Desarrollador de Aplicaciones Web (DAW)</h4>
 
             <article class="resumen">
-                <h4>Resumen</h4>
+                <h4 class="titulo-seccion">Resumen</h4>
                 <p>
-                    Desarrollor de Aplicaciones Web con una base sólida en tecnologías front, backend y gestión de bases de datos. 
+                    Desarrollador de Aplicaciones Web con una base sólida en tecnologías front, backend y gestión de bases de datos. 
                     Mi trayectoria previa en el sector de la alta gastronomía me ha dotado de una capacidad excepcional para trabajar bajo presión, 
                     gestionar equipos y optimizar procesos en entornos de alto rendimiento. Actualmente busco aplicar mi disciplina y mis 
-                    competencias técnicas en el sector IT para contribuir al desarrollo de soluciones de software eficientes y escalables.
+                    competencias técnicas en el sector IT.
                 </p>
             </article>
 
             <article class="laboral">
-                <h4>Experiencia laboral</h4>
+                <h4 class="titulo-seccion">Experiencia laboral</h4>
                 
                 <div class="empresa">
                     <h4>Cocinero, Restaurante Copenhague</h4>
                     <h5>Junio 2024 - Abril 2025 | Valencia</h5>
                     <p>
-                        Gestión de partidas en un entorno de alta exigencia. Desarrollo de la capacidad de respuesta rápida ante imprevistos y optimización de flujos de trabajo, habilidades que ahora traslado al desarrollo de código limpio y estructurado.
+                        Gestión de partidas en un entorno de alta exigencia. Desarrollo de la capacidad de respuesta rápida ante imprevistos y optimización de flujos de trabajo, trasladando estas habilidades al desarrollo de código limpio.
                     </p>
                 </div>
 
@@ -223,7 +246,7 @@
             </article>
 
             <article class="estudios">
-                <h4>Formación Académica</h4>
+                <h4 class="titulo-seccion">Formación Académica</h4>
                 <div class="formacion">
                     <h4>Técnico Superior en Desarrollo de Aplicaciones Web (DAW)</h4>
                     <h5>CEAC | 2024 - 2026 (En curso)</h5>
