@@ -151,6 +151,7 @@ body {
     margin: 200px 0;
     margin-left: 25%;
     margin-right: -25%;
+    gap: 5px;
 }
 
 .nav-links button{
@@ -194,6 +195,13 @@ body {
    
     min-height: 100vh;
     transition: var(--transition);
+}
+
+/* Clase que aplicaremos al main cuando el sidebar esté abierto */
+#main-content.blur-effect {
+    filter: blur(3px);
+    transition: filter 0.3s ease;
+    pointer-events: none; /* Evita que el usuario haga clic en el contenido mientras está borroso */
 }
 
 .btn-text{

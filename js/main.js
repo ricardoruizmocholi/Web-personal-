@@ -9,6 +9,7 @@ const btnCloseModal = document.querySelector('.close-modal');
 // Toggle del Menú Lateral
 menuToggle.addEventListener('click', () => {
     sidebar.classList.toggle('active');
+    mainContent.classList.toggle('blur-effect');
 });
 
 // Función para cargar secciones
@@ -29,6 +30,13 @@ async function cargarSeccion(nombre) {
         window.scrollTo(0, 0);
     } catch (error) {
         mainContent.innerHTML = "<h2>Error al cargar el contenido</h2>";
+    }
+    if (sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+    }
+    
+    if (mainContent.classList.contains('blur-effect')) {
+        mainContent.classList.remove('blur-effect');
     }
 }
 
