@@ -20,11 +20,16 @@ async function cargarSeccion(nombre) {
         // Determinamos la extensión: si es blog buscamos .php, si no .html
         const extension = (nombre === 'blog') ? 'php' : 'html';
         const ruta = `secciones/${nombre}/index.${extension}`;
+        console.log("Intentando cargar:", ruta);
         
         const respuesta = await fetch(ruta);
+        console.log("Estado de la respuesta:", respuesta.status);
         if (!respuesta.ok) throw new Error("No se pudo cargar la sección");
         
         const html = await respuesta.text();
+
+        console.log("Contenido recibido (primeros 50 caracteres):", html.substring(0, 50));
+
         mainContent.innerHTML = html; // Insertamos el resultado del PHP aquí
         
         window.scrollTo(0, 0);
