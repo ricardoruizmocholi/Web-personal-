@@ -76,14 +76,34 @@ document.addEventListener('click', (e) => {
 // Manejo del envío del formulario de contacto
 document.addEventListener('submit', async (e) => {
     if (e.target && e.target.id === 'contact-form') {
-        e.preventDefault(); // Evita que la página se recargue
+        e.preventDefault();
 
         const form = e.target;
-        const formData = new FormData(form);
         const btnEnviar = form.querySelector('.btn-enviar');
-        
-        // Efecto visual de carga
-        const originalText = btnEnviar.innerText;
+
+        // --- VALIDACIÓN REGEX ---
+        const email = form.email.value.trim();
+        const telefono = form.telefono.value.trim();
+
+        // Regex para Email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // Regex para Teléfono (General: admite +, espacios y de 9 a 15 números)
+        const telRegex = /^\+?[\d\s]{9,15}$/;
+
+        if (!emailRegex.test(email)) {
+            alert("Por favor, introduce un correo electrónico válido (ejemplo@dominio.com).");
+            form.email.focus();
+            return;
+        }
+
+        if (telefono !== "" && !telRegex.test(telefono)) {
+            alert("El formato del teléfono no es válido.");
+            form.telefono.focus();
+            return;
+        }
+        // --- FIN VALIDACIÓN ---
+
+        const formData = new FormData(form);
         btnEnviar.innerText = "Enviando...";
         btnEnviar.disabled = true;
 
@@ -99,15 +119,14 @@ document.addEventListener('submit', async (e) => {
                 alert("¡Mensaje enviado con éxito!");
                 form.reset();
                 document.getElementById('contact-modal').style.display = "none";
-                document.getElementById('main-content').classList.remove('blur-effect');
             } else {
-                alert("Error: " + (result.details || "No se pudo enviar el mensaje."));
+                alert("Error: " + result.details);
             }
         } catch (error) {
-            console.error("Error en el envío:", error);
-            alert("Error de conexión con el servidor.");
+            console.error("Error:", error);
+            alert("Hubo un fallo en la conexión.");
         } finally {
-            btnEnviar.innerText = originalText;
+            btnEnviar.innerText = "Enviar";
             btnEnviar.disabled = false;
         }
     }
