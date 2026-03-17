@@ -5,6 +5,10 @@ const mainContent = document.getElementById('main-content');
 const modal = document.getElementById('contact-modal');
 const btnContact = document.getElementById('open-contact');
 const btnCloseModal = document.querySelector('.close-modal');
+const form = document.getElementById('contact-form');
+
+// Carga inicial
+document.addEventListener('DOMContentLoaded', () => cargarSeccion('inicio'));
 
 // Toggle del Menú Lateral
 menuToggle.addEventListener('click', () => {
@@ -47,11 +51,13 @@ async function cargarSeccion(nombre) {
 
 // Modal de contacto
 btnContact.onclick = () => modal.style.display = "flex";
-btnCloseModal.onclick = () => modal.style.display = "none";
+
+btnCloseModal.onclick = () => {
+    modal.style.display = "none";
+    mainContent.classList.remove('blur-effect');
+};
 window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
 
-// Carga inicial
-document.addEventListener('DOMContentLoaded', () => cargarSeccion('inicio'));
 
 
 
@@ -61,6 +67,48 @@ document.addEventListener('click', (e) => {
         const modal = document.getElementById('contact-modal');
         if (modal) {
             modal.style.display = "flex";
+        }
+    }
+});
+
+// Enviar al correo
+
+// Manejo del envío del formulario de contacto
+document.addEventListener('submit', async (e) => {
+    if (e.target && e.target.id === 'contact-form') {
+        e.preventDefault(); // Evita que la página se recargue
+
+        const form = e.target;
+        const formData = new FormData(form);
+        const btnEnviar = form.querySelector('.btn-enviar');
+        
+        // Efecto visual de carga
+        const originalText = btnEnviar.innerText;
+        btnEnviar.innerText = "Enviando...";
+        btnEnviar.disabled = true;
+
+        try {
+            const response = await fetch('enviar.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                alert("¡Mensaje enviado con éxito!");
+                form.reset();
+                document.getElementById('contact-modal').style.display = "none";
+                document.getElementById('main-content').classList.remove('blur-effect');
+            } else {
+                alert("Error: " + (result.details || "No se pudo enviar el mensaje."));
+            }
+        } catch (error) {
+            console.error("Error en el envío:", error);
+            alert("Error de conexión con el servidor.");
+        } finally {
+            btnEnviar.innerText = originalText;
+            btnEnviar.disabled = false;
         }
     }
 });
