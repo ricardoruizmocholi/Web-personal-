@@ -150,3 +150,31 @@ async function verPostCompleto(id) {
         mainContent.innerHTML = "<p>Error al cargar el artículo.</p>";
     }
 }
+
+//Flechas de navegación
+
+// --- LÓGICA PARA CARRUSEL 3D (Sección Inicio) ---
+let currentTheta = 0;
+
+document.addEventListener('click', (e) => {
+    const carousel = document.getElementById('carousel-3d');
+    if (!carousel) return;
+
+    const panelCount = 4;
+    const angle = 360 / panelCount;
+
+    // Buscamos si el clic fue en el botón o dentro de él
+    const btnNext = e.target.closest('#nextBtn3d');
+    const btnPrev = e.target.closest('#prevBtn3d');
+
+    if (btnNext) {
+        currentTheta -= angle;
+        // Mantenemos el translateZ(-400px) para que rote en círculo alejado
+        carousel.style.transform = `translateZ(-400px) rotateY(${currentTheta}deg)`;
+    }
+    
+    if (btnPrev) {
+        currentTheta += angle;
+        carousel.style.transform = `translateZ(-400px) rotateY(${currentTheta}deg)`;
+    }
+});

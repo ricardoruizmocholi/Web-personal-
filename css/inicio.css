@@ -76,42 +76,131 @@
     
 }
 
-/* --- SECCIÓN 2: CARRUSEL PROYECTOS --- */
+/* --- SECCIÓN 2: CARRUSEL 3D (REDISEÑADA) --- */
 .inicio2 {
-    height: 50vh;
-    background: linear-gradient(to right, var(--azul-gradiente), var(--azul-oscuro));
-    padding: 40px 10%;
-    color: white;
-}
-
-.carrusel-container {
-    overflow: hidden;
-    margin-top: 30px;
-}
-
-.carrusel-track {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    min-height: 65vh;
+    width: 100%;
+    background: #0030ec;
+    position: relative;
+    overflow: hidden; /* Evita que las cartas que rotan creen scroll */
 }
 
-.proyecto-card {
-    background: var(--blaco-gradiente);
-    color: var(--azul-oscuro);
-    padding: 20px;
-    border-radius: 15px;
+.section-subtitle {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 50px;
+    z-index: 10;
+}
+
+/* Contenedor de perspectiva */
+.container-3d {
     width: 300px;
-    transition: transform 0.3s;
+    height: 400px;
+    position: relative;
+    perspective: 1200px; 
+    z-index: 5;
+    margin-bottom: 3%;
 }
 
-.proyecto-card:hover { transform: scale(1.05); }
+/* El carrusel que rota */
+#carousel-3d {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    /* Importante: El translateZ negativo aquí aleja el eje de rotación */
+    transform: translateZ(-400px); 
+    transition: transform 1.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Estilo de las tarjetas */
+.proyecto-card-3d {
+    position: absolute;
+    width: 300px;
+    height: 380px;
+    left: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    backface-visibility: hidden; /* No vemos la espalda de la carta */
+}
 
 .proyecto-img-placeholder {
+    width: 100%;
     height: 150px;
-    background: #ddd;
+    background: rgba(255,255,255,0.1);
     border-radius: 10px;
     margin-bottom: 15px;
 }
+
+/* POSICIONAMIENTO 3D (4 PROYECTOS) */
+/* Calculamos el translateZ para que formen un círculo perfecto sin tocarse */
+.proyecto-card-3d:nth-child(1) { transform: rotateY(0deg) translateZ(400px); }
+.proyecto-card-3d:nth-child(2) { transform: rotateY(90deg) translateZ(400px); }
+.proyecto-card-3d:nth-child(3) { transform: rotateY(180deg) translateZ(400px); }
+.proyecto-card-3d:nth-child(4) { transform: rotateY(270deg) translateZ(400px); }
+
+/* --- NAVEGACIÓN (FLECHAS SEPARADAS) --- */
+.navigation-3d {
+    position: absolute;
+    top: 55%;
+    width: 100%;
+    max-width: 900px; /* Controla qué tan separadas están las flechas */
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none; /* El contenedor no bloquea clics */
+    z-index: 100;
+}
+
+.btn-nav {
+    pointer-events: auto; /* Los botones sí reciben clics */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-nav:hover {
+    background: white;
+    color: #0030ec;
+    transform: scale(1.1);
+}
+
+.btn-carrusel {
+    margin-top: auto;
+    background: white;
+    color: black;
+    padding: 10px 25px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Quita el comentario si quieres que gire solo:
+#carousel-3d { animation: rotateCarousel 15s infinite linear; } 
+*/
 
 /* --- SECCIÓN 3: BLOG --- */
 .inicio3 {
@@ -123,4 +212,7 @@
     border-left: 5px solid var(--azul-gradiente);
     padding-left: 30px;
     margin-top: 40px;
+}
+.section-subtitle-3{
+    color: var(--azul-gradiente);
 }
