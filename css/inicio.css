@@ -23,11 +23,12 @@
 
 .inicio1 .sobremi {
     flex: 1;
-    background: linear-gradient(135deg, var(--blanco), var(--blaco-gradiente));
+    background: var(--bg-dinamico);    
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 10%;
+    transition: background 0.4s ease;
 }
 
 .tech-title {
@@ -205,7 +206,7 @@
 /* --- SECCIÓN 3: BLOG --- */
 .inicio3 {
     padding: 80px 10%;
-    background: var(--blaco-gradiente);
+    background: var(--bg-dinamico);
 }
 
 .blog-destacado {

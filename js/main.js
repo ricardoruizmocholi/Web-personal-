@@ -178,3 +178,37 @@ document.addEventListener('click', (e) => {
         carousel.style.transform = `translateZ(-400px) rotateY(${currentTheta}deg)`;
     }
 });
+
+// Añade esto al final de tu main.js
+function configurarModoOscuro() {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.innerHTML = '🌓';
+    toggleBtn.classList.add('dark-mode-toggle');
+    // Estilo rápido para situarlo sin romper nada
+    Object.assign(toggleBtn.style, {
+        position: 'fixed',
+        bottom: '20px',
+        left: '80px', // Para que no tape el sidebar
+        zIndex: '1000',
+        padding: '10px',
+        borderRadius: '50%',
+        cursor: 'pointer',
+        border: 'none',
+        background: 'var(--azul-gradiente)',
+        color: 'white'
+    });
+    document.body.appendChild(toggleBtn);
+
+    // Revisar si ya estaba activo
+    if (localStorage.getItem('modo-oscuro') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const esOscuro = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modo-oscuro', esOscuro);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', configurarModoOscuro);

@@ -1,24 +1,32 @@
 :root {
-    --bg-rosa: #a25db8;      /* Rosa claro fondo */
-    --marron-claro: #bb997f;  /* Marrón acentos */
-    --marron-oscuro: #433520; /* Texto */
-    --blanco: #FFFFFF;
-    --blaco-gradiente: #F2E6EE;
-    --morado-gradiente:#977DFF;
-    --azul-gradiente:#0033FF;
-    --azul-oscuro:#0600AB;
-    --gris-oscuro:#e9e9e9;
-    --rosa-gradiente:#FFCCF2;
-    --sidebar-width: 65px;    /* Ancho plegado */
+    /* COLORES QUE NO CAMBIAN (Identidad) */
+    --azul-gradiente: #0033FF;
+    --azul-oscuro: #0600AB;
+    --blaco-gradiente: #F2E6EE; /* Tu rosa/blanco de fondo actual */
+    
+    /* COLORES QUE SÍ CAMBIAN */
+    --bg-dinamico: #F2E6EE;      /* Fondo de las secciones */
+    --texto-dinamico: #0600AB;  /* Texto que ahora es azul oscuro/negro */
+    --sidebar-bg: #FFFFFF;      /* Fondo del sidebar */
+    
+    /* Estructura constante */
+    --sidebar-width: 65px;
     --expanded-width: 33.33vw;
     --transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+body.dark-mode {
+    --bg-dinamico: #111111;      /* El fondo rosa/blanco pasa a ser negro */
+    --texto-dinamico: #FFFFFF;   /* El texto oscuro pasa a ser blanco */
+    --sidebar-bg: #121212;       /* Sidebar oscuro */
 }
 
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: var(--blaco-gradiente);
-    color: var(--azul-gradiente);
+    background-color: var(--bg-dinamico);
+    color: var(--texto-dinamico);
+    transition: background-color 0.4s ease, color 0.4s ease;
     display: flex;
     overflow-x: hidden;
 }
@@ -30,7 +38,8 @@ body {
     left: 0;
     height: 100vh;
     width: var(--sidebar-width);
-    background-color: var(--bg-rosa);
+    background-color: var(--sidebar-bg);
+    color: var(--bg-dinamico)!important;
     display: flex;
     z-index: 1000;
     transition: var(--transition);
