@@ -16,6 +16,8 @@ menuToggle.addEventListener('click', () => {
     mainContent.classList.toggle('blur-effect');
 });
 
+
+
 // Función para cargar secciones
 async function cargarSeccion(nombre) {
     const mainContent = document.getElementById('main-content');
