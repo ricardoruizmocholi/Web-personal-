@@ -11,7 +11,7 @@
 
 .tech-title {
     font-size: 3rem;
-    background-color:var(--azul-gradiente) ;
+    background-color:var(--texto-dinamico) ;
     text-align: center;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

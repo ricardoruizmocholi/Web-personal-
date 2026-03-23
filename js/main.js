@@ -179,35 +179,55 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Añade esto al final de tu main.js
+// Funcionamiento modo oscuro
 function configurarModoOscuro() {
     const toggleBtn = document.createElement('button');
-    toggleBtn.innerHTML = '🌓';
     toggleBtn.classList.add('dark-mode-toggle');
-    // Estilo rápido para situarlo sin romper nada
+    
+    // Estilo para situarlo correctamente
     Object.assign(toggleBtn.style, {
         position: 'fixed',
         bottom: '20px',
-        left: '80px', // Para que no tape el sidebar
+        right: '20px', 
         zIndex: '1000',
         padding: '10px',
+        width: '45px',
+        height: '45px',
+        fontSize: '20px',
         borderRadius: '50%',
         cursor: 'pointer',
-        border: 'none',
-        background: 'var(--azul-gradiente)',
-        color: 'white'
+        border: '1px solid rgba(255,255,255,0.1)',
+        background: 'var(--fondo-modulo)', // Usamos tu azul para que resalte
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
     });
+
+    // Función para cambiar el icono
+    // Si es modo oscuro -> muestra Sol (para volver al día)
+    // Si es modo claro -> muestra Luna (para ir a la noche)
+    const actualizarIcono = () => {
+        const esOscuro = document.body.classList.contains('dark-mode');
+        toggleBtn.innerHTML = esOscuro ? '🌕' : '☀️';
+    };
+
     document.body.appendChild(toggleBtn);
 
-    // Revisar si ya estaba activo
+    // 1. Revisar estado inicial al cargar la página
     if (localStorage.getItem('modo-oscuro') === 'true') {
         document.body.classList.add('dark-mode');
     }
+    actualizarIcono(); // Poner el icono correcto según la carga inicial
 
+    // 2. Evento de clic
     toggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        const esOscuro = document.body.classList.contains('dark-mode');
-        localStorage.setItem('modo-oscuro', esOscuro);
+        const esOscuroNow = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modo-oscuro', esOscuroNow);
+        
+        actualizarIcono(); // Cambiar el icono tras el clic
     });
 }
 

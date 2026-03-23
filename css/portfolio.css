@@ -9,7 +9,8 @@
     margin-top: 4%;
     margin-bottom: 5%;
     padding: 3%;
-    background-color: var(--azul-gradiente);
+    background-color: var(--fondo-modulo);
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .portfolio-item {

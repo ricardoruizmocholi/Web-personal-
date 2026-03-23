@@ -6,9 +6,13 @@
     
     /* COLORES QUE SÍ CAMBIAN */
     --bg-dinamico: #F2E6EE;      /* Fondo de las secciones */
-    --texto-dinamico: #0600AB;  /* Texto que ahora es azul oscuro/negro */
+    --texto-dinamico: #0033FF;  /* Texto que ahora es azul oscuro/negro */
     --sidebar-bg: #FFFFFF;      /* Fondo del sidebar */
-    
+    --texto-sidebar: #F2E6EE;
+    --fondo-modulo: #0033FF;
+    --fondo-invertido: #1f1e1e;
+
+
     /* Estructura constante */
     --sidebar-width: 65px;
     --expanded-width: 33.33vw;
@@ -16,9 +20,12 @@
 }
 
 body.dark-mode {
-    --bg-dinamico: #111111;      /* El fondo rosa/blanco pasa a ser negro */
+    --bg-dinamico: #1f1e1e;      /* El fondo rosa/blanco pasa a ser negro */
     --texto-dinamico: #FFFFFF;   /* El texto oscuro pasa a ser blanco */
     --sidebar-bg: #121212;       /* Sidebar oscuro */
+    --texto-sidebar: #121212;
+    --fondo-modulo:rgba(255,255,255,0.1);
+    --fondo-invertido: #F2E6EE;
 }
 
 body {
@@ -39,7 +46,7 @@ body {
     height: 100vh;
     width: var(--sidebar-width);
     background-color: var(--sidebar-bg);
-    color: var(--bg-dinamico)!important;
+    color: var(--blaco-gradiente)!important;
     display: flex;
     z-index: 1000;
     transition: var(--transition);
@@ -123,7 +130,8 @@ body {
     display: block;
     width: 25px;
     height: 2px;
-    background: var(--blanco);
+    background: #F2E6EE;
+    
     margin: 5px auto;
     transition: 0.3s;
 }
@@ -131,7 +139,7 @@ body {
 .close-x {
     display: none;
     font-size: 2.5rem;
-    color: var(--blanco);
+    color: #F2E6EE;
     line-height: 30px;
 }
 
@@ -144,7 +152,7 @@ body {
     width: 100%;
     opacity: 0;
     transition: opacity 0.3s;
-    color: var(--marron-oscuro);
+    color: var(--blaco-gradiente) !important;
     background-color: var(--azul-gradiente);
 }
 
@@ -236,7 +244,7 @@ body {
     z-index: 2000;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background: rgba(252, 189, 236, 0.6);
+    background: rgba(252, 189, 236, 0.4);
     backdrop-filter: blur(2px);
     /* Compatibilidad para navegadores antiguos (Safari) */
     -webkit-backdrop-filter: blur(3px);
@@ -255,7 +263,7 @@ body {
 /* --- MODAL CONTACTO TECH --- */
 .modal-content.contact-tech {
     background: var(--azul-gradiente); /* Fondo azul intenso de la referencia */
-    color: var(--blanco);
+    color: white;
     padding: 50px;
     border-radius: 0; /* Diseño cuadrado más moderno según referencia */
     max-width: 900px;
@@ -307,7 +315,7 @@ body {
 .tech-form input, 
 .tech-form select, 
 .tech-form textarea {
-    background: var(--blanco);
+    
     border: none;
     padding: 12px;
     font-family: inherit;
@@ -321,7 +329,7 @@ body {
 
 /* Botón estilo píldora blanca */
 .btn-enviar {
-    background: var(--blanco);
+   
     color: var(--azul-gradiente);
     border: none;
     padding: 15px 40px;
@@ -351,10 +359,31 @@ body {
 
 /* Botón cerrar blanco */
 .close-modal {
-    color: var(--blanco);
+    color: var(--blanco-gradiante);
     font-size: 2.5rem;
     position: absolute;
     top: 20px;
     right: 25px;
     cursor: pointer;
+}
+
+.dark-mode-toggle{
+
+    position: 'fixed';
+        bottom: '20px';
+        right:  '80px';
+        zIndex: '1000';
+        padding: '10px';
+        borderRadius: '50%';
+        cursor: 'pointer';
+        border: '1px solid rgba(255,255,255,0.1)';
+        background: 'rgba(255,255,255,0.1)';
+        color: 'white';
+        transition: 0.3s ease;
+
+}
+.dark-mode-toggle:hover{
+
+    background-color: var(--fondo-invertido) !important;
+    transform: scale(1.05);
 }

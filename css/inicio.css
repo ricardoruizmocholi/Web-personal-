@@ -33,7 +33,7 @@
 
 .tech-title {
     font-size: 4rem;
-    background: linear-gradient(90deg, var(--azul-gradiente), var(--azul-oscuro));
+    background: var(--texto-dinamico);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
