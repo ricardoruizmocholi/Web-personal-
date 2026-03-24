@@ -235,88 +235,161 @@ function configurarModoOscuro() {
 
 document.addEventListener('DOMContentLoaded', configurarModoOscuro);
 
-// Java Script Blog crud
+// --- EASTER EGG: PONG MINIMALISTA ---
 
-// --- LÓGICA DEL CRUD DEL BLOG ---
+let secretCode = '';
+const codigoSecreto = 'pong';
 
-async function cargarPostsCRUD() {
-    const tabla = document.getElementById('tabla-posts');
-    if(!tabla) return;
-
-    try {
-        const res = await fetch('secciones/blog/crud.php?accion=listar');
-        const posts = await res.json();
-        
-        tabla.innerHTML = posts.map(p => `
-            <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
-                <td style="padding: 12px; font-weight: bold;">${p.titulo}</td>
-                <td style="padding: 12px;">${p.fecha}</td>
-                <td style="padding: 12px; text-align: center;">
-                    <button onclick="editarPost(${p.id})" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">📝</button>
-                    <button onclick="borrarPost(${p.id})" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🗑️</button>
-                </td>
-            </tr>
-        `).join('');
-    } catch (e) { console.error("Error cargando tabla:", e); }
-}
-
-function abrirModalCrear() {
-    document.getElementById('form-blog').reset();
-    document.getElementById('post-id').value = '';
-    document.getElementById('modal-titulo').innerText = 'Nueva Publicación';
-    document.getElementById('modal-crud').style.display = 'flex';
-}
-
-function cerrarModal() {
-    document.getElementById('modal-crud').style.display = 'none';
-}
-
-async function editarPost(id) {
-    const res = await fetch(`secciones/blog/crud.php?accion=obtener&id=${id}`);
-    const p = await res.json();
+// 1. Escuchar el teclado para detectar el código
+document.addEventListener('keydown', (e) => {
+    secretCode += e.key.toLowerCase();
     
-    document.getElementById('post-id').value = p.id;
-    document.getElementById('titulo').value = p.titulo;
-    document.getElementById('extracto').value = p.extracto;
-    document.getElementById('contenido').value = p.contenido;
-    
-    document.getElementById('modal-titulo').innerText = 'Editar Publicación';
-    document.getElementById('modal-crud').style.display = 'flex';
-}
-
-async function borrarPost(id) {
-    if(confirm('¿Deseas eliminar permanentemente esta publicación?')) {
-        await fetch(`secciones/blog/crud.php?accion=borrar&id=${id}`);
-        cargarPostsCRUD();
+    if (secretCode.length > codigoSecreto.length) {
+        secretCode = secretCode.substring(secretCode.length - codigoSecreto.length);
     }
-}
-
-// Manejador del formulario (Subida con archivos)
-document.addEventListener('submit', async (e) => {
-    if(e.target.id === 'form-blog') {
-        e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('id', document.getElementById('post-id').value);
-        formData.append('titulo', document.getElementById('titulo').value);
-        formData.append('extracto', document.getElementById('extracto').value);
-        formData.append('contenido', document.getElementById('contenido').value);
-        
-        const videoInput = document.getElementById('video_file');
-        if (videoInput.files[0]) {
-            formData.append('video_file', videoInput.files[0]);
+    
+    if (secretCode === codigoSecreto) {
+        if (!document.getElementById('pong-canvas')?.classList.contains('activo')) {
+            iniciarPong();
         }
-
-        await fetch('secciones/blog/crud.php?accion=guardar', {
-            method: 'POST',
-            body: formData
-        });
-
-        cerrarModal();
-        cargarPostsCRUD();
+        secretCode = ''; 
     }
 });
 
-// Modifica tu función cargarSeccion para inicializar el CRUD
-// Añade esto dentro del 'try' de cargarSeccion(nombre):
-// if(nombre === 'blog/crud') setTimeout(cargarPostsCRUD, 100);
+function iniciarPong() {
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+
+    // --- CREACIÓN DE ELEMENTOS (CANVAS Y UIs) ---
+    let canvas = document.getElementById('pong-canvas');
+    if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.id = 'pong-canvas';
+        sidebar.appendChild(canvas);
+    }
+
+    // Función para crear las pantallas de UI (Victoria/Derrota)
+    function crearPantallaUI(id, titulo, colorTitulo, colorBtn) {
+        let ui = document.getElementById(id);
+        if (!ui) {
+            ui = document.createElement('div');
+            ui.id = id;
+            ui.innerHTML = `
+                <h3 style="font-size: 1.8rem; margin-bottom: 30px; color: ${colorTitulo}; text-transform: uppercase; letter-spacing: 2px; text-align: center;">${titulo}</h3>
+                <div style="display: flex; gap: 20px;">
+                    <button class="btn-pong-repetir" style="background: ${colorBtn}; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s;">
+                        <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: white;"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                    </button>
+                    <button class="btn-pong-cerrar" style="background: #ff3366; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s;">
+                        <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </button>
+                </div>
+            `;
+            ui.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:60;";
+            sidebar.appendChild(ui);
+        }
+        return ui;
+    }
+
+    const lossUI = crearPantallaUI('pong-game-over', '¡Has perdido!', 'white', 'var(--azul-gradiente, #0033FF)');
+    const winUI = crearPantallaUI('pong-win', '¡VICTORIA!', '#FFD700', '#FFD700'); // Dorado para la victoria
+
+    canvas.width = sidebar.offsetWidth;
+    canvas.height = sidebar.offsetHeight;
+    canvas.classList.add('activo');
+
+    const ctx = canvas.getContext('2d');
+    let score = 0;
+    let playing = true;
+    let animationId;
+    let ball = { x: 50, y: 50, r: 8, dx: 4, dy: 4 };
+    const paddle = { w: 10, h: 80, x: 10, y: canvas.height / 2 - 40 };
+
+    const movePaddle = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        paddle.y = e.clientY - rect.top - paddle.h / 2;
+    };
+    canvas.addEventListener('mousemove', movePaddle);
+
+    // --- LÓGICA DE BOTONES ---
+    const resetGame = () => {
+        score = 0;
+        ball = { x: 50, y: 50, r: 8, dx: 4, dy: 4 };
+        lossUI.style.display = 'none';
+        winUI.style.display = 'none';
+        sidebar.classList.remove('victoria-pong'); // Quitar dorado si estaba
+        playing = true;
+        draw();
+    };
+
+    const closeGame = () => {
+        playing = false;
+        lossUI.style.display = 'none';
+        winUI.style.display = 'none';
+        canvas.classList.remove('activo');
+        sidebar.classList.remove('victoria-pong');
+        canvas.removeEventListener('mousemove', movePaddle);
+        cancelAnimationFrame(animationId);
+    };
+
+    // Asignar eventos a ambos juegos de botones
+    [lossUI, winUI].forEach(ui => {
+        ui.querySelector('.btn-pong-repetir').onclick = resetGame;
+        ui.querySelector('.btn-pong-cerrar').onclick = closeGame;
+    });
+
+    function draw() {
+        if (!playing) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Dibujar elementos
+        ctx.fillStyle = '#FFF';
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = (score >= 10) ? '#FFD700' : 'var(--azul-gradiente, #0033FF)';
+        ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.2)';
+        ctx.font = 'bold 80px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText(score, canvas.width / 2, canvas.height / 2 + 30);
+
+        // Movimiento y Colisiones
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        if (ball.y - ball.r < 0 || ball.y + ball.r > canvas.height) ball.dy *= -1;
+        if (ball.x + ball.r > canvas.width) ball.dx *= -1;
+
+        if (ball.x - ball.r < paddle.x + paddle.w) {
+            if (ball.y > paddle.y && ball.y < paddle.y + paddle.h) {
+                ball.dx *= -1;
+                ball.dx += 0.5; 
+                score++;
+                if (score >= 10) {
+                    ganarJuego();
+                    return;
+                }
+            } else if (ball.x < 0) {
+                perderJuego();
+                return;
+            }
+        }
+        animationId = requestAnimationFrame(draw);
+    }
+
+    function ganarJuego() {
+        playing = false;
+        sidebar.classList.add('victoria-pong'); // Activa el CSS dorado
+        winUI.style.display = 'flex';
+    }
+
+    function perderJuego() {
+        playing = false;
+        lossUI.style.display = 'flex';
+    }
+
+    draw();
+}

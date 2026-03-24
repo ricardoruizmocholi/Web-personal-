@@ -390,3 +390,31 @@ body {
     background-color: var(--fondo-invertido) !important;
     transform: scale(1.05);
 }
+
+
+/* --- ESTILOS DEL EASTER EGG (PONG) --- */
+#pong-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Se pone por detrás de tus menús para no molestar */
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none; /* Por defecto no interfiere */
+}
+
+#pong-canvas.activo {
+    opacity: 1;
+    z-index: 50; /* Se pone por delante para poder jugar */
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro para contraste */
+}
+
+/* Efecto al ganar los 10 puntos */
+.sidebar.victoria-pong {
+    background: linear-gradient(135deg, #FFD700, #FF8C00) !important;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    transition: all 0.5s ease;
+}
