@@ -7,10 +7,11 @@
     /* COLORES QUE SÍ CAMBIAN */
     --bg-dinamico: #F2E6EE;      /* Fondo de las secciones */
     --texto-dinamico: #0033FF;  /* Texto que ahora es azul oscuro/negro */
-    --sidebar-bg: #FFFFFF;      /* Fondo del sidebar */
+    --sidebar-bg: #0033FF;      /* Fondo del sidebar */
     --texto-sidebar: #F2E6EE;
     --fondo-modulo: #0033FF;
     --fondo-invertido: #1f1e1e;
+    --fondo-barra: #0033FF;
 
 
     /* Estructura constante */
@@ -26,6 +27,7 @@ body.dark-mode {
     --texto-sidebar: #121212;
     --fondo-modulo:rgba(255,255,255,0.1);
     --fondo-invertido: #F2E6EE;
+    --fondo-barra: rgb(37, 37, 37);
 }
 
 body {
@@ -61,7 +63,7 @@ body {
 /* Franja de activación */
 .sidebar-trigger {
     min-width: var(--sidebar-width);
-    background-color: var(--azul-gradiente); /* Tu azul oscuro */
+    background-color: var(--fondo-barra); /* Tu azul oscuro */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,7 +88,7 @@ body {
 }
 
 .social-list li a:hover {
-    color:var(--rosa-gradiente); /* Un azul cyan para el hover tecnológico */
+     /* Un azul cyan para el hover tecnológico */
     transform: scale(1.2);
     
    
@@ -153,7 +155,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s;
     color: var(--blaco-gradiente) !important;
-    background-color: var(--azul-gradiente);
+    background-color: var(--fondo-barra);
 }
 
 .sidebar.active .sidebar-content {
@@ -177,7 +179,7 @@ body {
     height: 25%;
     margin-left: -4%;
     border-radius: 20px 10px;
-    background-color: #0033FF;
+    background-color: transparent;
     border: 2px solid var(--blaco-gradiente);
     color: var(--blaco-gradiente);
     font-size: 20px;
@@ -262,7 +264,8 @@ body {
 
 /* --- MODAL CONTACTO TECH --- */
 .modal-content.contact-tech {
-    background: var(--azul-gradiente); /* Fondo azul intenso de la referencia */
+    background: var(--fondo-barra); /* Fondo azul intenso de la referencia */
+    backdrop-filter: blur(10px);
     color: white;
     padding: 50px;
     border-radius: 0; /* Diseño cuadrado más moderno según referencia */

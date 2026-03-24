@@ -26,6 +26,15 @@ if (!$post) { die("Artículo no encontrado."); }
             <span class="fecha-badge"><?php echo $post['fecha']; ?></span>
             <h1 class="tech-title" style="-webkit-text-fill-color: var(--azul-oscuro);"><?php echo $post['titulo']; ?></h1>
         </header>
+
+        <?php if (!empty($post['video_path'])): ?>
+            <div class="video-container" style="margin: 25px 0; border-radius: 15px; overflow: hidden; background: #000;">
+                <video controls style="width: 100%; max-height: 450px; display: block;">
+                    <source src="videos/<?php echo $post['video_path']; ?>" type="video/mp4">
+                    Tu navegador no soporta el video.
+                </video>
+            </div>
+        <?php endif; ?>
         
         <section class="post-body">
             <?php echo nl2br($post['contenido']); ?>

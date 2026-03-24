@@ -234,3 +234,89 @@ function configurarModoOscuro() {
 }
 
 document.addEventListener('DOMContentLoaded', configurarModoOscuro);
+
+// Java Script Blog crud
+
+// --- LÓGICA DEL CRUD DEL BLOG ---
+
+async function cargarPostsCRUD() {
+    const tabla = document.getElementById('tabla-posts');
+    if(!tabla) return;
+
+    try {
+        const res = await fetch('secciones/blog/crud.php?accion=listar');
+        const posts = await res.json();
+        
+        tabla.innerHTML = posts.map(p => `
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+                <td style="padding: 12px; font-weight: bold;">${p.titulo}</td>
+                <td style="padding: 12px;">${p.fecha}</td>
+                <td style="padding: 12px; text-align: center;">
+                    <button onclick="editarPost(${p.id})" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">📝</button>
+                    <button onclick="borrarPost(${p.id})" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🗑️</button>
+                </td>
+            </tr>
+        `).join('');
+    } catch (e) { console.error("Error cargando tabla:", e); }
+}
+
+function abrirModalCrear() {
+    document.getElementById('form-blog').reset();
+    document.getElementById('post-id').value = '';
+    document.getElementById('modal-titulo').innerText = 'Nueva Publicación';
+    document.getElementById('modal-crud').style.display = 'flex';
+}
+
+function cerrarModal() {
+    document.getElementById('modal-crud').style.display = 'none';
+}
+
+async function editarPost(id) {
+    const res = await fetch(`secciones/blog/crud.php?accion=obtener&id=${id}`);
+    const p = await res.json();
+    
+    document.getElementById('post-id').value = p.id;
+    document.getElementById('titulo').value = p.titulo;
+    document.getElementById('extracto').value = p.extracto;
+    document.getElementById('contenido').value = p.contenido;
+    
+    document.getElementById('modal-titulo').innerText = 'Editar Publicación';
+    document.getElementById('modal-crud').style.display = 'flex';
+}
+
+async function borrarPost(id) {
+    if(confirm('¿Deseas eliminar permanentemente esta publicación?')) {
+        await fetch(`secciones/blog/crud.php?accion=borrar&id=${id}`);
+        cargarPostsCRUD();
+    }
+}
+
+// Manejador del formulario (Subida con archivos)
+document.addEventListener('submit', async (e) => {
+    if(e.target.id === 'form-blog') {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('id', document.getElementById('post-id').value);
+        formData.append('titulo', document.getElementById('titulo').value);
+        formData.append('extracto', document.getElementById('extracto').value);
+        formData.append('contenido', document.getElementById('contenido').value);
+        
+        const videoInput = document.getElementById('video_file');
+        if (videoInput.files[0]) {
+            formData.append('video_file', videoInput.files[0]);
+        }
+
+        await fetch('secciones/blog/crud.php?accion=guardar', {
+            method: 'POST',
+            body: formData
+        });
+
+        cerrarModal();
+        cargarPostsCRUD();
+    }
+});
+
+// Modifica tu función cargarSeccion para inicializar el CRUD
+// Añade esto dentro del 'try' de cargarSeccion(nombre):
+// if(nombre === 'blog/crud') setTimeout(cargarPostsCRUD, 100);
