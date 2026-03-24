@@ -368,7 +368,7 @@ function iniciarPong() {
                 ball.dx *= -1;
                 ball.dx += 0.5; 
                 score++;
-                if (score >= 10) {
+                if (score >= 15) {
                     ganarJuego();
                     return;
                 }
