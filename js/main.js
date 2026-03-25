@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', configurarModoOscuro);
 let secretCode = '';
 const codigoSecreto = 'pong';
 
-// 1. Escuchar el teclado para detectar el código
+// 1. Activar por teclado
 document.addEventListener('keydown', (e) => {
     secretCode += e.key.toLowerCase();
     
@@ -249,12 +249,31 @@ document.addEventListener('keydown', (e) => {
     }
     
     if (secretCode === codigoSecreto) {
-        if (!document.getElementById('pong-canvas')?.classList.contains('activo')) {
-            iniciarPong();
-        }
+        activarJuegoDesdeFuera();
         secretCode = ''; 
     }
 });
+
+// 2. Crear y activar por el Píxel Anómalo (Botón secreto)
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar && !document.getElementById('secret-pong-btn')) {
+        const secretBtn = document.createElement('div');
+        secretBtn.id = 'secret-pong-btn';
+        secretBtn.title = "¿Curiosidad?";
+        
+        sidebar.appendChild(secretBtn);
+
+        secretBtn.addEventListener('click', activarJuegoDesdeFuera);
+    }
+});
+
+// Función de control para no abrirlo dos veces
+function activarJuegoDesdeFuera() {
+    if (!document.getElementById('pong-canvas')?.classList.contains('activo')) {
+        iniciarPong();
+    }
+}
 
 function iniciarPong() {
     const sidebar = document.querySelector('.sidebar');

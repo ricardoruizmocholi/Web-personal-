@@ -11,6 +11,7 @@
     --texto-sidebar: #F2E6EE;
     --fondo-modulo: #0033FF;
     --fondo-invertido: #1f1e1e;
+    --fondo-invertido2: #1f1e1e;
     --fondo-barra: #0033FF;
 
 
@@ -28,6 +29,7 @@ body.dark-mode {
     --fondo-modulo:rgba(255,255,255,0.1);
     --fondo-invertido: #F2E6EE;
     --fondo-barra: rgb(37, 37, 37);
+    --fondo-invertido2: #0033FF;
 }
 
 body {
@@ -417,4 +419,48 @@ body {
     background: linear-gradient(135deg, #FFD700, #FF8C00) !important;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
     transition: all 0.5s ease;
+}
+
+
+/* --- BOTÓN SECRETO PONG (PÍXEL ANÓMALO) --- */
+#secret-pong-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px; /* Se queda en la esquina inferior derecha de la barra */
+    width: 8px;
+    height: 8px;
+    background-color: var(--fondo-invertido2);
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 70;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: transparent;
+    font-weight: bold;
+    font-size: 0px;
+}
+
+/* Al pasar el ratón, se convierte en la paleta del Pong y muestra texto */
+#secret-pong-btn:hover {
+    opacity: 1;
+    width: 60px;
+    height: 24px;
+    border-radius: 12px;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0, 51, 255, 0.4);
+}
+
+#secret-pong-btn:hover::after {
+    content: "PONG";
+}
+
+/* Ocultar el botón cuando el juego está activo */
+#pong-canvas.activo ~ #secret-pong-btn {
+    display: none;
 }
