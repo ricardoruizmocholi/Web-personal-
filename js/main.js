@@ -1,3 +1,22 @@
+// Detección de protocolo file:// (no compatible con fetch ni PHP)
+if (window.location.protocol === 'file:') {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.innerHTML = `
+            <div style="font-family:sans-serif;text-align:center;padding:80px 20px;color:#222;">
+                <h1 style="color:#e74c3c;font-size:2rem;margin-bottom:16px;">Error: protocolo incorrecto</h1>
+                <p style="font-size:1.1rem;line-height:1.6;margin-bottom:24px;">
+                    Estás abriendo el archivo directamente desde el disco (<code>file://</code>).<br>
+                    Esta web requiere un servidor HTTP para cargar secciones y enviar formularios.
+                </p>
+                <a href="http://localhost/web-personal/"
+                   style="display:inline-block;padding:12px 28px;background:#2980b9;color:#fff;border-radius:6px;text-decoration:none;font-size:1rem;font-weight:bold;">
+                    Abrir en http://localhost/web-personal/
+                </a>
+            </div>`;
+    });
+    throw new Error('Abre la web en http://localhost/web-personal/ en lugar de file://');
+}
+
 // Elementos UI
 const sidebar = document.getElementById('sidebar');
 const menuToggle = document.getElementById('menu-toggle');
