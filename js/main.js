@@ -37,26 +37,44 @@ menuToggle.addEventListener('click', () => {
 
 
 
+// Base path calculado UNA VEZ al arrancar (antes de cualquier pushState)
+// En XAMPP devuelve '/web-personal/', en producción devuelve '/'
+const BASE_PATH = (() => {
+    const p = window.location.pathname;
+    const cleaned = p.endsWith('index.html') ? p.slice(0, -10) : p;
+    return cleaned.endsWith('/') ? cleaned : cleaned.slice(0, cleaned.lastIndexOf('/') + 1);
+})();
+
+// Slugs relativos al BASE_PATH — sin / inicial
+const seccionMeta = {
+    inicio:     { titulo: 'Ricardo Ruiz Mocholí | Desarrollador Web Freelance · Valencia', slug: '' },
+    test:       { titulo: 'Sobre Mí — Ricardo Ruiz Mocholí | Desarrollador Web Full Stack',  slug: 'sobre-mi' },
+    portafolio: { titulo: 'Portafolio — Proyectos Web de Ricardo Ruiz Mocholí',              slug: 'portafolio' },
+    blog:       { titulo: 'Blog de Desarrollo Web — Ricardo Ruiz Mocholí',                   slug: 'blog' },
+};
+
 // Función para cargar secciones
 async function cargarSeccion(nombre) {
     const mainContent = document.getElementById('main-content');
-    
+
     try {
         // Determinamos la extensión: si es blog buscamos .php, si no .html
         const extension = (nombre === 'blog') ? 'php' : 'html';
         const ruta = `secciones/${nombre}/index.${extension}`;
-        console.log("Intentando cargar:", ruta);
-        
+
         const respuesta = await fetch(ruta);
-        console.log("Estado de la respuesta:", respuesta.status);
         if (!respuesta.ok) throw new Error("No se pudo cargar la sección");
-        
+
         const html = await respuesta.text();
+        mainContent.innerHTML = html;
 
-        console.log("Contenido recibido (primeros 50 caracteres):", html.substring(0, 50));
+        // Actualizar URL y title para que Google pueda rastrear cada sección
+        const meta = seccionMeta[nombre];
+        if (meta) {
+            history.pushState({ seccion: nombre }, meta.titulo, BASE_PATH + meta.slug);
+            document.title = meta.titulo;
+        }
 
-        mainContent.innerHTML = html; // Insertamos el resultado del PHP aquí
-        
         window.scrollTo(0, 0);
     } catch (error) {
         mainContent.innerHTML = "<h2>Error al cargar el contenido</h2>";
@@ -64,11 +82,18 @@ async function cargarSeccion(nombre) {
     if (sidebar.classList.contains('active')) {
         sidebar.classList.remove('active');
     }
-    
+
     if (mainContent.classList.contains('blur-effect')) {
         mainContent.classList.remove('blur-effect');
     }
 }
+
+// Soporte para botón Atrás del navegador
+window.addEventListener('popstate', (e) => {
+    if (e.state?.seccion) {
+        cargarSeccion(e.state.seccion);
+    }
+});
 
 // Modal de contacto
 btnContact.onclick = () => modal.style.display = "flex";

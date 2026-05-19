@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /libs/
+Disallow: /enviar.php
+Disallow: /secciones/blog/crud.php
+Disallow: /secciones/blog/crud.html
+
+Sitemap: https://ricardorm.es/sitemap.xml

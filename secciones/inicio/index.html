@@ -1,19 +1,18 @@
-<style></style>
-<head>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/inicio.css">
-</head>
 <section class="inicio1">
+    <head>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/inicio.css">
+    </head>
     <div class="imagen">
-        <img src="img/perfil2.png" alt="Ricardo Ruiz">
+        <img src="img/perfil2.png" alt="Ricardo Ruiz Mocholí, desarrollador web freelance en Valencia" width="300" height="300">
     </div>
     <div class="sobremi">
-        <h1 class="tech-title">Ricardo Ruiz</h1>
+        <h1 class="tech-title">Ricardo Ruiz Mocholí</h1>
+        <p class="hero-tagline">Desarrollador Web Full Stack · Integración de IA · Valencia, España</p>
         <p>
-            Desarrollador Web apasionado por crear soluciones digitales robustas y estéticas. 
-            En el desarrollo front-end mi enfoque principal es en la experiencia del usuario que le resulte
-            lo mas intiutivo posible. 
-            Aportando compromiso, aprendizaje rápido y una visión tecnológica actualizada a cada proyecto.
+            Técnico Superior en Desarrollo de Aplicaciones Web (DAW). Especializado en crear soluciones
+            digitales full stack con HTML, CSS, JavaScript, PHP y MySQL. Freelance disponible para
+            proyectos en Valencia, España y Latinoamérica.
         </p>
         <div class="botones-grupo">
             <button onclick="cargarSeccion('test')" class="btn-primario">Saber más</button>
@@ -24,43 +23,43 @@
 
 <section class="inicio2">
     <h2 class="section-subtitle">Proyectos Destacados</h2>
-    
+
     <div class="container-3d">
         <div id="carousel-3d">
-            
+
             <div class="proyecto-card-3d">
                 <div class="proyecto-img-placeholder">
-                    <img src="img/proyecto3.png" alt="Plantillas" class="main-img">
+                    <img src="img/proyecto3.png" alt="Plantillas — aplicación web SaaS de gestión de tareas en JavaScript" class="main-img" loading="lazy" width="300" height="200">
                 </div>
                 <h3>Plantillas</h3>
-                <p>Proyecto para la organización</p>
+                <p>App web SaaS para organización con tableros dinámicos</p>
                 <a href="#" class="btn-carrusel" onclick="cargarSeccion('portafolio')">Ver más</a>
             </div>
 
             <div class="proyecto-card-3d">
                 <div class="proyecto-img-placeholder">
-                    <img src="img/proyecto4.png" alt="FesolCode" class="main-img">
+                    <img src="img/proyecto4.png" alt="FesolCode — guía de identidad corporativa desarrollada con HTML y CSS" class="main-img" loading="lazy" width="300" height="200">
                 </div>
                 <h3>FesolCode</h3>
-                <p>Manual de identidad corporativa.</p>
+                <p>Guía de identidad corporativa en HTML/CSS</p>
                 <a href="#" class="btn-carrusel" onclick="cargarSeccion('portafolio')">Ver más</a>
             </div>
 
             <div class="proyecto-card-3d">
                 <div class="proyecto-img-placeholder">
-                    <img src="img/proyecto5.png" alt="Subtitulos" class="main-img">
+                    <img src="img/proyecto5.png" alt="Subtítulos con IA — accesibilidad web con subtítulos autogenerados por inteligencia artificial" class="main-img" loading="lazy" width="300" height="200">
                 </div>
-                <h3>Subtitulos</h3>
-                <p>Proyecto enfocado a la adaptavilidad</p>
+                <h3>Subtítulos con IA</h3>
+                <p>Subtítulos autogenerados por IA para accesibilidad web</p>
                 <a href="#" class="btn-carrusel" onclick="cargarSeccion('portafolio')">Ver más</a>
             </div>
 
             <div class="proyecto-card-3d">
                 <div class="proyecto-img-placeholder">
-                    <img src="img/proyecto1.png" alt="Alerta Project" class="main-img">
+                    <img src="img/proyecto1.png" alt="Alarma con voz — reloj digital con notificaciones de voz en JavaScript" class="main-img" loading="lazy" width="300" height="200">
                 </div>
-                <h3>Alarma</h3>
-                <p>Mini proyecto personal</p>
+                <h3>Alarma con Voz</h3>
+                <p>Reloj digital con notificaciones de voz en JavaScript</p>
                 <a href="#" class="btn-carrusel" onclick="cargarSeccion('portafolio')">Ver más</a>
             </div>
 
@@ -68,8 +67,8 @@
     </div>
 
     <div class="navigation-3d">
-        <button class="btn-nav" id="prevBtn3d">&#10094;</button>
-        <button class="btn-nav" id="nextBtn3d">&#10095;</button>
+        <button class="btn-nav" id="prevBtn3d" aria-label="Proyecto anterior">&#10094;</button>
+        <button class="btn-nav" id="nextBtn3d" aria-label="Proyecto siguiente">&#10095;</button>
     </div>
 </section>
 
@@ -79,11 +78,10 @@
         <article class="blog-destacado">
             <div class="blog-info">
                 <span>15 Oct 2023</span>
-                <h3>El futuro del desarrollo con IA</h3>
-                <p>Reflexiones sobre cómo las nuevas herramientas están cambiando DAW...</p>
+                <h3>El futuro del desarrollo web con IA</h3>
+                <p>Reflexiones sobre cómo las herramientas de inteligencia artificial están transformando el desarrollo de aplicaciones web (DAW)...</p>
                 <button onclick="cargarSeccion('blog')" class="btn-text">Leer artículo</button>
             </div>
         </article>
     </div>
 </section>
-<script src="../../js/main.js"></script>

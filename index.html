@@ -3,8 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ricardo Ruiz | Portfolio</title>
+
+    <!-- SEO Principal -->
+    <title>Ricardo Ruiz Mocholí | Desarrollador Web Freelance · Valencia</title>
+    <meta name="description" content="Técnico Superior DAW. Desarrollo web full stack e integración de IA con HTML, CSS, JavaScript, PHP y MySQL. Freelance disponible en Valencia, España. ¡Contáctame!">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="author" content="Ricardo Ruiz Mocholí">
+    <link rel="canonical" href="https://ricardorm.es/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ricardorm.es/">
+    <meta property="og:title" content="Ricardo Ruiz Mocholí | Desarrollador Web Freelance · Valencia">
+    <meta property="og:description" content="Técnico Superior DAW. Desarrollo web full stack e integración de IA con HTML, CSS, JavaScript, PHP y MySQL. Freelance en Valencia, España.">
+    <meta property="og:image" content="https://ricardorm.es/img/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ricardo Ruiz Mocholí — Portfolio de Desarrollador Web">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="Ricardo Ruiz Mocholí — Portfolio">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ricardo Ruiz Mocholí | Desarrollador Web Freelance · Valencia">
+    <meta name="twitter:description" content="Técnico Superior DAW. Desarrollo web full stack e integración de IA. Freelance en Valencia, España.">
+    <meta name="twitter:image" content="https://ricardorm.es/img/og-preview.png">
+
+    <!-- Schema JSON-LD: Person + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://ricardorm.es/#persona",
+          "name": "Ricardo Ruiz Mocholí",
+          "alternateName": ["ricardorm", "Ricardo Ruiz", "Ricardo Mocholi"],
+          "url": "https://ricardorm.es",
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://ricardorm.es/img/perfil2.png",
+            "width": 400,
+            "height": 400
+          },
+          "jobTitle": "Desarrollador Web Full Stack",
+          "description": "Técnico Superior en Desarrollo de Aplicaciones Web especializado en frontend, backend e integración de inteligencia artificial. Freelance en Valencia, España.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Valencia",
+            "addressRegion": "Comunidad Valenciana",
+            "addressCountry": "ES"
+          },
+          "sameAs": [
+            "https://github.com/ricardoruizmocholi",
+            "https://www.linkedin.com/in/ricardo-ruiz-mocholí-0a4974194"
+          ],
+          "knowsAbout": [
+            "Desarrollo Web", "HTML5", "CSS3", "JavaScript", "PHP",
+            "MySQL", "MongoDB", "UI/UX Design", "Inteligencia Artificial", "Full Stack"
+          ],
+          "email": "ricardoruizm99@gmail.com"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://ricardorm.es/#website",
+          "url": "https://ricardorm.es",
+          "name": "Ricardo Ruiz Mocholí — Portfolio",
+          "description": "Portfolio personal de Ricardo Ruiz Mocholí, desarrollador web freelance en Valencia",
+          "inLanguage": "es-ES",
+          "author": { "@id": "https://ricardorm.es/#persona" }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Estilos -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/inicio.css">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="stylesheet" href="css/portfolio.css">
     <link rel="stylesheet" href="css/sobre-mi.css">
@@ -63,7 +142,25 @@
     </nav>
 
     <main id="main-content">
-        <div class="loader">Cargando...</div>
+        <!-- Contenido pre-renderizado para Googlebot (JS lo reemplaza en tiempo real) -->
+        <section class="inicio1">
+            <div class="imagen">
+                <img src="img/perfil2.png" alt="Ricardo Ruiz Mocholí, desarrollador web freelance en Valencia" width="300" height="300">
+            </div>
+            <div class="sobremi">
+                <h1 class="tech-title">Ricardo Ruiz Mocholí</h1>
+                <p class="hero-tagline">Desarrollador Web Full Stack · Integración de IA · Valencia, España</p>
+                <p>
+                    Técnico Superior en Desarrollo de Aplicaciones Web (DAW). Especializado en crear soluciones
+                    digitales full stack con HTML, CSS, JavaScript, PHP y MySQL. Freelance disponible para
+                    proyectos en Valencia, España y Latinoamérica.
+                </p>
+                <div class="botones-grupo">
+                    <button onclick="cargarSeccion('test')" class="btn-primario">Saber más</button>
+                    <button id="open-contact-inicio" class="btn-secundario">Contáctame</button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <div id="contact-modal" class="modal">
@@ -110,7 +207,7 @@
 
                 <div class="form-row">
                     <div class="form-footer">
-                        <p>* champs obligatoires</p>
+                        <p>* campos obligatorios</p>
                         <button type="submit" class="btn-enviar">Enviar</button>
                     </div>
                 </div>
