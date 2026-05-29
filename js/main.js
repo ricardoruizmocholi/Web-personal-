@@ -340,7 +340,7 @@ function iniciarPong() {
     const sidebar = document.querySelector('.sidebar');
     if (!sidebar) return;
 
-    // --- CREACIÓN DE ELEMENTOS (CANVAS Y UIs) ---
+    // --- CANVAS ---
     let canvas = document.getElementById('pong-canvas');
     if (!canvas) {
         canvas = document.createElement('canvas');
@@ -348,56 +348,87 @@ function iniciarPong() {
         sidebar.appendChild(canvas);
     }
 
-    // Función para crear las pantallas de UI (Victoria/Derrota)
+    // offsetWidth usa el ancho CSS real (ignora transform), correcto en móvil y desktop
+    canvas.width  = sidebar.offsetWidth  || window.innerWidth;
+    canvas.height = sidebar.offsetHeight || window.innerHeight;
+    canvas.classList.add('activo');
+
+    // Tamaños escalados al canvas para que funcionen en cualquier resolución
+    const ballR     = Math.max(6,  Math.round(canvas.width * 0.018));
+    const baseSpeed = Math.max(3,  canvas.width * 0.006);
+    const paddleW   = Math.max(8,  Math.round(canvas.width * 0.025));
+    const paddleH   = Math.max(60, Math.round(canvas.height * 0.15));
+    const paddleX   = paddleW;
+    const fontSize  = Math.round(canvas.width * 0.18);
+
+    // Ocultar el botón hamburguesa móvil mientras se juega (z-index 1001 > canvas z-index 50)
+    const mobileHamburger = document.getElementById('mobile-hamburger');
+    if (mobileHamburger) mobileHamburger.style.display = 'none';
+
+    const ctx = canvas.getContext('2d');
+    let score   = 0;
+    let playing = true;
+    let animationId;
+
+    const estadoInicial = () => ({
+        x: canvas.width * 0.6,
+        y: canvas.height * 0.3,
+        r: ballR,
+        dx: -baseSpeed,   // Empieza yendo hacia la pala
+        dy:  baseSpeed
+    });
+    let ball   = estadoInicial();
+    const paddle = { w: paddleW, h: paddleH, x: paddleX, y: canvas.height / 2 - paddleH / 2 };
+
+    // --- UIs victoria / derrota ---
     function crearPantallaUI(id, titulo, colorTitulo, colorBtn) {
         let ui = document.getElementById(id);
         if (!ui) {
             ui = document.createElement('div');
             ui.id = id;
             ui.innerHTML = `
-                <h3 style="font-size: 1.8rem; margin-bottom: 30px; color: ${colorTitulo}; text-transform: uppercase; letter-spacing: 2px; text-align: center;">${titulo}</h3>
-                <div style="display: flex; gap: 20px;">
-                    <button class="btn-pong-repetir" style="background: ${colorBtn}; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s;">
-                        <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: white;"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                <h3 style="font-size:1.4rem;margin-bottom:24px;color:${colorTitulo};text-transform:uppercase;letter-spacing:2px;text-align:center;">${titulo}</h3>
+                <div style="display:flex;gap:20px;">
+                    <button class="btn-pong-repetir" style="background:${colorBtn};border:none;border-radius:50%;width:56px;height:56px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);touch-action:manipulation;">
+                        <svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:white;"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
                     </button>
-                    <button class="btn-pong-cerrar" style="background: #ff3366; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: transform 0.2s;">
-                        <svg viewBox="0 0 24 24" style="width: 30px; height: 30px; fill: white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    <button class="btn-pong-cerrar" style="background:#ff3366;border:none;border-radius:50%;width:56px;height:56px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.5);touch-action:manipulation;">
+                        <svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                     </button>
-                </div>
-            `;
-            ui.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:60;";
+                </div>`;
+            ui.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;flex-direction:column;justify-content:center;align-items:center;z-index:60;';
             sidebar.appendChild(ui);
         }
         return ui;
     }
 
-    const lossUI = crearPantallaUI('pong-game-over', '¡Has perdido!', 'white', 'var(--azul-gradiente, #0033FF)');
-    const winUI = crearPantallaUI('pong-win', '¡VICTORIA!', '#FFD700', '#FFD700'); // Dorado para la victoria
+    const lossUI = crearPantallaUI('pong-game-over', '¡Has perdido!', 'white', 'var(--azul-gradiente,#0033FF)');
+    const winUI  = crearPantallaUI('pong-win', '¡VICTORIA!', '#FFD700', '#FFD700');
 
-    canvas.width = sidebar.offsetWidth;
-    canvas.height = sidebar.offsetHeight;
-    canvas.classList.add('activo');
-
-    const ctx = canvas.getContext('2d');
-    let score = 0;
-    let playing = true;
-    let animationId;
-    let ball = { x: 50, y: 50, r: 8, dx: 4, dy: 4 };
-    const paddle = { w: 10, h: 80, x: 10, y: canvas.height / 2 - 40 };
-
-    const movePaddle = (e) => {
+    // --- CONTROLES: ratón + táctil ---
+    const movePaddleMouse = (e) => {
         const rect = canvas.getBoundingClientRect();
-        paddle.y = e.clientY - rect.top - paddle.h / 2;
+        const scaleY = canvas.height / rect.height;
+        paddle.y = (e.clientY - rect.top) * scaleY - paddle.h / 2;
     };
-    canvas.addEventListener('mousemove', movePaddle);
+    const movePaddleTouch = (e) => {
+        e.preventDefault(); // Evita scroll de la página mientras se juega
+        const rect = canvas.getBoundingClientRect();
+        const scaleY = canvas.height / rect.height;
+        paddle.y = (e.touches[0].clientY - rect.top) * scaleY - paddle.h / 2;
+    };
 
-    // --- LÓGICA DE BOTONES ---
+    canvas.addEventListener('mousemove', movePaddleMouse);
+    canvas.addEventListener('touchmove', movePaddleTouch, { passive: false });
+
+    // --- RESET / CERRAR ---
     const resetGame = () => {
-        score = 0;
-        ball = { x: 50, y: 50, r: 8, dx: 4, dy: 4 };
+        score  = 0;
+        ball   = estadoInicial();
+        paddle.y = canvas.height / 2 - paddle.h / 2;
         lossUI.style.display = 'none';
-        winUI.style.display = 'none';
-        sidebar.classList.remove('victoria-pong'); // Quitar dorado si estaba
+        winUI.style.display  = 'none';
+        sidebar.classList.remove('victoria-pong');
         playing = true;
         draw();
     };
@@ -405,64 +436,85 @@ function iniciarPong() {
     const closeGame = () => {
         playing = false;
         lossUI.style.display = 'none';
-        winUI.style.display = 'none';
+        winUI.style.display  = 'none';
         canvas.classList.remove('activo');
         sidebar.classList.remove('victoria-pong');
-        canvas.removeEventListener('mousemove', movePaddle);
+        canvas.removeEventListener('mousemove', movePaddleMouse);
+        canvas.removeEventListener('touchmove', movePaddleTouch);
         cancelAnimationFrame(animationId);
+        if (mobileHamburger) mobileHamburger.style.display = '';
     };
 
-    // Asignar eventos a ambos juegos de botones
     [lossUI, winUI].forEach(ui => {
         ui.querySelector('.btn-pong-repetir').onclick = resetGame;
-        ui.querySelector('.btn-pong-cerrar').onclick = closeGame;
+        ui.querySelector('.btn-pong-cerrar').onclick  = closeGame;
     });
 
+    // --- BUCLE DE DIBUJO ---
     function draw() {
         if (!playing) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Dibujar elementos
+        // Pelota
         ctx.fillStyle = '#FFF';
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = (score >= 10) ? '#FFD700' : 'var(--azul-gradiente, #0033FF)';
+        // Pala
+        ctx.fillStyle = score >= 10 ? '#FFD700' : '#0033FF';
         ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
 
-        ctx.fillStyle = 'rgba(255,255,255,0.2)';
-        ctx.font = 'bold 80px Inter';
+        // Puntuación (marca de agua)
+        ctx.fillStyle = 'rgba(255,255,255,0.18)';
+        ctx.font = `bold ${fontSize}px Inter`;
         ctx.textAlign = 'center';
-        ctx.fillText(score, canvas.width / 2, canvas.height / 2 + 30);
+        ctx.fillText(score, canvas.width / 2, canvas.height / 2 + fontSize * 0.35);
 
-        // Movimiento y Colisiones
+        // Mover pelota
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        if (ball.y - ball.r < 0 || ball.y + ball.r > canvas.height) ball.dy *= -1;
-        if (ball.x + ball.r > canvas.width) ball.dx *= -1;
-
-        if (ball.x - ball.r < paddle.x + paddle.w) {
-            if (ball.y > paddle.y && ball.y < paddle.y + paddle.h) {
-                ball.dx *= -1;
-                ball.dx += 0.5; 
-                score++;
-                if (score >= 15) {
-                    ganarJuego();
-                    return;
-                }
-            } else if (ball.x < 0) {
-                perderJuego();
-                return;
-            }
+        // Rebote pared superior e inferior — clampea posición para no salir del canvas
+        if (ball.y - ball.r < 0) {
+            ball.y  = ball.r;
+            ball.dy = Math.abs(ball.dy);
+        } else if (ball.y + ball.r > canvas.height) {
+            ball.y  = canvas.height - ball.r;
+            ball.dy = -Math.abs(ball.dy);
         }
+
+        // Rebote pared derecha
+        if (ball.x + ball.r > canvas.width) {
+            ball.x  = canvas.width - ball.r;
+            ball.dx = -Math.abs(ball.dx);
+        }
+
+        // Colisión con la pala — solo cuando la pelota viene hacia la izquierda (ball.dx < 0)
+        if (ball.dx < 0 &&
+            ball.x - ball.r <= paddle.x + paddle.w &&
+            ball.x + ball.r  > paddle.x &&
+            ball.y + ball.r  > paddle.y &&
+            ball.y - ball.r  < paddle.y + paddle.h) {
+
+            ball.x  = paddle.x + paddle.w + ball.r; // Sacar la pelota de dentro de la pala
+            ball.dx = Math.abs(ball.dx) + canvas.width * 0.0008; // Acelerar levemente
+            score++;
+            if (score >= 15) { ganarJuego(); return; }
+        }
+
+        // Pelota sale por la izquierda → derrota
+        if (ball.x + ball.r < 0) {
+            perderJuego();
+            return;
+        }
+
         animationId = requestAnimationFrame(draw);
     }
 
     function ganarJuego() {
         playing = false;
-        sidebar.classList.add('victoria-pong'); // Activa el CSS dorado
+        sidebar.classList.add('victoria-pong');
         winUI.style.display = 'flex';
     }
 

@@ -62,12 +62,14 @@
         width: 80vw !important;
         transform: translateX(0) !important;
         box-shadow: 6px 0 40px rgba(0, 0, 0, 0.5);
+        
     }
 
     .sidebar-trigger {
         min-width: 52px !important;
         max-width: 52px !important;
         padding: 20px 0 !important;
+        height: 94%;
     }
 
     .logo-small {
