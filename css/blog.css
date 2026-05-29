@@ -252,6 +252,8 @@
     
     .card-glass {
         padding: 25px;
+        width: 85% !important;
+        margin-left: 3.5% !important;
     }
 }
 

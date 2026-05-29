@@ -1,0 +1,9 @@
+Options -MultiViews
+RewriteEngine On
+
+# Si el archivo o directorio existen realmente, servirlos tal cual
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Todo lo demás → index.html (SPA fallback)
+RewriteRule ^ index.html [L]

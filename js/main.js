@@ -26,8 +26,16 @@ const btnContact = document.getElementById('open-contact');
 const btnCloseModal = document.querySelector('.close-modal');
 const form = document.getElementById('contact-form');
 
-// Carga inicial
-document.addEventListener('DOMContentLoaded', () => cargarSeccion('inicio'));
+// Carga inicial — detecta la sección desde la URL para que F5 funcione
+document.addEventListener('DOMContentLoaded', () => {
+    const slugToSeccion = {
+        'sobre-mi':   'test',
+        'portafolio': 'portafolio',
+        'blog':       'blog',
+    };
+    const lastSlug = window.location.pathname.split('/').filter(Boolean).pop() || '';
+    cargarSeccion(slugToSeccion[lastSlug] || 'inicio');
+});
 
 // Toggle del Menú Lateral
 menuToggle.addEventListener('click', () => {
@@ -86,6 +94,11 @@ async function cargarSeccion(nombre) {
     if (mainContent.classList.contains('blur-effect')) {
         mainContent.classList.remove('blur-effect');
     }
+
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    if (mobileOverlay) mobileOverlay.classList.remove('visible');
+    const mobileHamburger = document.getElementById('mobile-hamburger');
+    if (mobileHamburger) mobileHamburger.setAttribute('aria-expanded', 'false');
 }
 
 // Soporte para botón Atrás del navegador
@@ -213,15 +226,16 @@ document.addEventListener('click', (e) => {
     const btnNext = e.target.closest('#nextBtn3d');
     const btnPrev = e.target.closest('#prevBtn3d');
 
+    const tz = window.innerWidth <= 768 ? -280 : -400;
+
     if (btnNext) {
         currentTheta -= angle;
-        // Mantenemos el translateZ(-400px) para que rote en círculo alejado
-        carousel.style.transform = `translateZ(-400px) rotateY(${currentTheta}deg)`;
+        carousel.style.transform = `translateZ(${tz}px) rotateY(${currentTheta}deg)`;
     }
-    
+
     if (btnPrev) {
         currentTheta += angle;
-        carousel.style.transform = `translateZ(-400px) rotateY(${currentTheta}deg)`;
+        carousel.style.transform = `translateZ(${tz}px) rotateY(${currentTheta}deg)`;
     }
 });
 
@@ -456,3 +470,50 @@ function iniciarPong() {
 
     draw();
 }
+
+// --- MENÚ MÓVIL: panel deslizante con overlay ---
+document.addEventListener('DOMContentLoaded', () => {
+    const svgHamburger = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F2E6EE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+    const svgClose    = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F2E6EE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+    const mobileBtn = document.createElement('button');
+    mobileBtn.id = 'mobile-hamburger';
+    mobileBtn.setAttribute('aria-label', 'Abrir menú');
+    mobileBtn.setAttribute('aria-expanded', 'false');
+    mobileBtn.innerHTML = svgHamburger;
+    document.body.appendChild(mobileBtn);
+
+    const overlay = document.createElement('div');
+    overlay.id = 'mobile-overlay';
+    document.body.appendChild(overlay);
+
+    const cerrarMenuMobile = () => {
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('blur-effect');
+        overlay.classList.remove('visible');
+        mobileBtn.innerHTML = svgHamburger;
+        mobileBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    mobileBtn.addEventListener('click', () => {
+        if (sidebar.classList.contains('active')) {
+            cerrarMenuMobile();
+        } else {
+            sidebar.classList.add('active');
+            mainContent.classList.add('blur-effect');
+            overlay.classList.add('visible');
+            mobileBtn.innerHTML = svgClose;
+            mobileBtn.setAttribute('aria-expanded', 'true');
+        }
+    });
+
+    overlay.addEventListener('click', cerrarMenuMobile);
+
+    // Sincronizar overlay con el botón X interno del sidebar (close-x)
+    menuToggle.addEventListener('click', () => {
+        const abierto = sidebar.classList.contains('active');
+        overlay.classList.toggle('visible', abierto);
+        mobileBtn.innerHTML = abierto ? svgClose : svgHamburger;
+        mobileBtn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    });
+});
